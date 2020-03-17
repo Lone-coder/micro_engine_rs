@@ -1,20 +1,18 @@
 # micro_engine_rs
-## 2D game engine in RUST
-
-
+## 2D game engine written in Rust
 
 * Platform for creating open world 2d games in rust.
 
 * Requirements:
 
-*     Rust  https://www.rust-lang.org/tools/install 
- 
-*     Cargo (comes with rust)
-  
-*     SDL2 (More grphics APIs will be implemented later on)
+    *     Rust  https://www.rust-lang.org/tools/install
 
-* To run , first the dependencies have to installed (SDL2 for now)
+    *     Cargo (comes with rust)
 
-* go to <a href ="https://github.com/Rust-SDL2/rust-sdl2">Rust-sdl2</a> to know which dependencies have to be installed
+    *     SDL2 (More graphics APIs will be implemented later on)
 
-* Build using cargo , execute `cargo build`
+* To run , first the dependencies have to installed (SDL2 for now).
+
+* Go to <a href ="https://github.com/Rust-SDL2/rust-sdl2">Rust-sdl2</a> to know which dependencies have to be installed.
+
+* Build using cargo , execute `cargo build`.
