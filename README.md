@@ -1,4 +1,7 @@
 # micro_engine_rs
+
+![Rust](https://github.com/Lone-coder/micro_engine_rs/workflows/Rust/badge.svg)
+
 ## 2D game engine written in Rust
 
 * Platform for creating open world 2d games in rust.
