@@ -3,7 +3,7 @@ name = "micro_engine_rs"
 version = "0.1.0"
 authors = ["Cubeasaurous <yaegababa@gmail.com>",    
            "Lone-coder <abhijithcheruvery@gmail.com"]
-edition = "2018"
+edition = "2020"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
