@@ -36,7 +36,9 @@ fn main_loop()->Result<(),String>{
         while running {
             for event in event_pump.poll_iter() {
                 match event {
-
+                    Event::Quit {..} | Event::KeyDown {keycode: Some(Keycode::Escape), ..} => {
+                            running = false;
+                        },
                     _=>(),
                 }
             }
