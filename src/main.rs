@@ -1,5 +1,4 @@
 extern crate sdl2;
-//main_player is the real player
 use sdl2::event::Event;
 use sdl2::pixels::Color;
 use sdl2::keyboard::Keycode;
