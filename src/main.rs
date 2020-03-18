@@ -6,13 +6,14 @@ use sdl2::rect::Rect;
 use std::collections::{HashMap,HashSet};
 
 fn main(){
-	
+
 	println!("testing");
     	let _out = main_loop();
 }
 
 fn main_loop()->Result<(),String>{
 
+		let mut world=micro_engine_rs::world::World::generate(6,6);
         let sdl_context = sdl2::init()?;
         let video_subsystem = sdl_context.video()?;
         let window = video_subsystem.window("SDL2", 800, 600)
@@ -34,7 +35,9 @@ fn main_loop()->Result<(),String>{
                     _=>(),
                 }
             }
-            std::thread::sleep(std::time::Duration::from_millis(300));
+
+			world.display();
+            std::thread::sleep(std::time::Duration::from_millis(1000));
         }
 
         Ok(())
