@@ -6,13 +6,10 @@ use sdl2::rect::Rect;
 use std::collections::{HashMap,HashSet};
 
 
-
-
 fn main(){
 
-    let _out=main_loop();
+    let _out = main_loop();
 }
-
 
 fn main_loop()->Result<(),String>{
 
@@ -27,12 +24,7 @@ fn main_loop()->Result<(),String>{
         let mut timer = sdl_context.timer()?;
         let mut event_pump = sdl_context.event_pump()?;
 
-
-        //new_world.display();
-
-
-
-        let mut running=true;
+        let mut running = true;
         while running {
             for event in event_pump.poll_iter() {
                 match event {
@@ -42,19 +34,8 @@ fn main_loop()->Result<(),String>{
                     _=>(),
                 }
             }
-
-
             std::thread::sleep(std::time::Duration::from_millis(300));
-
         }
-
-
-
-
-
-
-
-
 
         Ok(())
 
