@@ -3,7 +3,7 @@
 use std::fmt::Debug;
 
 pub struct TestObject{
-    props:u32,   //u32 for now , contains properties and behaviour
+    pub props:u32,   //u32 for now , contains properties and behaviour
     x:i32,
     y:i32,
 }
@@ -61,5 +61,16 @@ pub fn display(& mut self){
     }
     println!("--------------------");
 }
+
+
+pub fn test_display(&mut self){
+
+    self.block_map.iter().for_each(|x| {
+                                        x.iter().for_each(|_y| print!("[]"));
+                                        println!();
+                                });
+                println!("==========================");
+            }
+
 
 }
