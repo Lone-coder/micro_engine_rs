@@ -5,7 +5,6 @@ use sdl2::keyboard::Keycode;
 use sdl2::rect::Rect;
 use std::collections::{HashMap,HashSet};
 
-
 fn main(){
 
     let _out = main_loop();
