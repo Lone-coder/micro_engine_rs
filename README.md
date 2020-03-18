@@ -1,6 +1,7 @@
 # micro_engine_rs
 
 ![Rust](https://github.com/Lone-coder/micro_engine_rs/workflows/Rust/badge.svg)
+![Labeler](https://github.com/Lone-coder/micro_engine_rs/workflows/Labeler/badge.svg)
 
 ## 2D game engine written in Rust
 
