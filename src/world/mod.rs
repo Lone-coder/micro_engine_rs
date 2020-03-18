@@ -1,5 +1,12 @@
 //Going to become more complicated because lifetime specifiers
 // Game object for test
+extern crate sdl2;
+
+use sdl2::rect::Rect;
+use sdl2::pixels::Color;
+use sdl2::video::Window;
+use sdl2::render::Canvas;
+
 use std::fmt::Debug;
 
 pub struct TestObject{
@@ -23,7 +30,6 @@ pub struct World{
 impl World {
 
     //generates a new world
-
     pub fn generate(blocks_x:usize,blocks_y:usize)->World{
         let mut map:Vec<Vec<BlockObjects>>=Vec::new();
 
@@ -33,13 +39,11 @@ impl World {
             for n in 0..blocks_x{
                 map[m].push(
                     BlockObjects{
-                        object:vec![TestObject{
-                                    props:20,x:10,y:10
-                                }]
-                            }
-                    )
-                }
+                        object : vec![TestObject{ props:20,x:10,y:10}]
+                    }
+                )
             }
+        }
 
     World{
         block_map:map,
@@ -48,17 +52,21 @@ impl World {
         }
     }
 
+    pub fn render(&mut self, canvas : &mut Canvas<Window>)
+    {
+        
+    }
 
+    pub fn test_display(&mut self){
 
-pub fn test_display(&mut self){
+        self.block_map.iter().for_each(|x| {
+                x.iter().for_each(|_y| print!("[]"));
+                println!();
+                });
 
-    self.block_map.iter().for_each(|x| {
-            x.iter().for_each(|_y| print!("[]"));
-            println!();
-            });
+        println!("===================================");
 
-    println!("===================================");
-            }
+    }
 
 
 }
