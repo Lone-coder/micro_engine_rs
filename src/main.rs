@@ -36,7 +36,7 @@ fn main_loop()->Result<(),String>{
                 }
             }
 
-			world.display();
+			world.test_display();
             std::thread::sleep(std::time::Duration::from_millis(1000));
         }
 
