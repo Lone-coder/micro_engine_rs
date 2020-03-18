@@ -15,6 +15,6 @@ impl<'a> Camera<'a>{
 
 
     pub fn display_scene_objects(& mut self){
-        self.scene_objects.iter().map(|x| println!("{:?}",x.props ));
+        self.scene_objects.iter().for_each(|x| println!("{:?}",x.props ));
     }
 }

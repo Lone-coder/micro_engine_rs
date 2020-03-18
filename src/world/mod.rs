@@ -31,17 +31,15 @@ impl World {
             map.push(Vec::new());
 
             for n in 0..blocks_x{
-                    map[m].push(
-
-                        BlockObjects{
-                            object:vec![
-                            TestObject{
-                                props:20,x:10,y:10
+                map[m].push(
+                    BlockObjects{
+                        object:vec![TestObject{
+                                    props:20,x:10,y:10
+                                }]
                             }
-                            ]
-                        })
-                    }
+                    )
                 }
+            }
 
     World{
         block_map:map,
@@ -51,25 +49,15 @@ impl World {
     }
 
 
-pub fn display(& mut self){
-    for m in 0..self.block_height as usize{
-        for n in 0..self.block_width as usize{
-            print!("[]" );
-        }
-        println!();
-
-    }
-    println!("--------------------");
-}
-
 
 pub fn test_display(&mut self){
 
     self.block_map.iter().for_each(|x| {
-                                        x.iter().for_each(|_y| print!("[]"));
-                                        println!();
-                                });
-                println!("==========================");
+            x.iter().for_each(|_y| print!("[]"));
+            println!();
+            });
+
+    println!("===================================");
             }
 
 
