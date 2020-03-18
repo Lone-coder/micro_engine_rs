@@ -6,8 +6,9 @@ use sdl2::rect::Rect;
 use std::collections::{HashMap,HashSet};
 
 fn main(){
-
-    let _out = main_loop();
+	
+	println!("testing");
+    	let _out = main_loop();
 }
 
 fn main_loop()->Result<(),String>{
