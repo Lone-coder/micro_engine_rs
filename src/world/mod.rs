@@ -7,24 +7,18 @@ use sdl2::pixels::Color;
 use sdl2::video::Window;
 use sdl2::render::Canvas;
 
-use std::fmt::Debug;
 
-pub struct TestObject{
-    pub props:u32,   //u32 for now , contains properties and behaviour
-    x:i32,
-    y:i32,
-}
 
 //Objects in a block
 pub struct BlockObjects{
-    object:Vec<TestObject>,
+    object:Vec<super::game_object::GameObject>,
 }
 
 
 pub struct World{
-    block_map:Vec<Vec<BlockObjects>>,
-    block_width:u32,
-    block_height:u32,
+    pub block_map:Vec<Vec<BlockObjects>>,
+    pub block_width:u32,
+    pub block_height:u32,
 }
 
 impl World {
@@ -39,7 +33,7 @@ impl World {
             for n in 0..blocks_x{
                 map[m].push(
                     BlockObjects{
-                        object : vec![TestObject{ props:20,x:10,y:10}]
+                        object : vec![super::game_object::GameObject::new()]
                     }
                 )
             }
@@ -54,8 +48,10 @@ impl World {
 
     pub fn render(&mut self, canvas : &mut Canvas<Window>)
     {
-        
+
     }
+
+
 
     pub fn test_display(&mut self){
 
