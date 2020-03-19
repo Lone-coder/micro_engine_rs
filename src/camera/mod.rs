@@ -66,6 +66,7 @@ impl<'a,'b> Camera<'a,'b>{
 
     // Returns all objects in proximity for collisions
     // and rendering
+
     // to get all game objects loop over the value returned
 
     /*
@@ -83,10 +84,13 @@ impl<'a,'b> Camera<'a,'b>{
     */
 
         pub fn get_objs_in_scene(&mut self)->Vec<(&super::game_object::GameObject,i32,i32)>{
+
+   
+
+    pub fn get_objs_in_scene(&mut self)->Vec<(&super::game_object::GameObject,i32,i32)>{
         let mut proximity_blocks:Vec<(&super::game_object::GameObject,i32,i32)>=Vec::new();
         let world=self.world.unwrap();
         let block=self.get_block().unwrap();
-
 
 
         for m in 0..3{
@@ -95,6 +99,7 @@ impl<'a,'b> Camera<'a,'b>{
                 //debug
                 println!("{:?}",block.1+1-m);
                 world.block_map[(block.1+ 1 -m) as usize][(block.0+1-n) as usize].
+
                 object.iter()
                 .for_each(|x|{
                     proximity_blocks.push((&x.0,x.1-self.x,x.2-self.y))
