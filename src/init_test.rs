@@ -9,6 +9,7 @@ pub fn init_test<'b,'a>()->(world::World,camera::Camera<'a,'b>){
 
     let cam=camera::Camera::create(400,300,None);
     (world,cam)
+
     //after getting this , attach world to cam
     //using camera.attach_world
 }
