@@ -35,8 +35,8 @@ impl World {
                 map[m].push(
                     BlockObjects{
                         object : vec![(super::game_object::GameObject::new(),
-                                        _block_width * (n-1) as i32 + _block_width/2 ,
-                                        _block_height * (n-1) as i32 +_block_height/2 )]
+                                        _block_width * ((n) as i32) + _block_width/2 ,
+                                        _block_height * ((n) as i32) +_block_height/2 )]
                     }
                 )
             }
@@ -44,8 +44,8 @@ impl World {
 
     World{
         block_map:map,
-        block_width:blocks_x  as i32,
-        block_height:blocks_y as i32
+        block_width:_block_width  as i32,
+        block_height:_block_height as i32
         }
     }
 
