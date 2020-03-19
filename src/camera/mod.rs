@@ -45,7 +45,7 @@ impl<'a,'b> Camera<'a,'b>{
     }
 
 
-    pub fn get_coord(&mut self,val:i32)->(i32,i32){
+    pub fn get_coord(&mut self)->(i32,i32){
         (self.x,self.y)
     }
 
@@ -55,9 +55,35 @@ impl<'a,'b> Camera<'a,'b>{
     }
 
 
-    pub fn remove_obj(&mut self, obj: &'b super::game_object::GameObject){
-        //todo
-        self.scene_objects.remove(0);
+    pub fn get_block(&mut self)->Option<(i32,i32)>{
+        if let Some(world)=self.world{
+            Some((self.x/world.block_width,self.y/world.block_height))
+        }else{
+            None
+        }
+    }
+
+
+    // Returns all objects in proximity for collisions
+    // and rendering
+    // inefficient probably
+    // to get all game objects loop over the value returned
+
+    pub fn get_objs_in_scene(&mut self)->Vec<(&super::game_object::GameObject,i32,i32)>{
+        let mut proximity_blocks:Vec<(&super::game_object::GameObject,i32,i32)>=Vec::new();
+        let world=self.world.unwrap();
+        let block=self.get_block().unwrap();
+
+        for m in 0..3{
+            for n in 0..3{
+                world.block_map[(block.1+1-m) as usize][(block.0+1-n) as usize].
+                object.iter()
+                .for_each(|x|{
+                    proximity_blocks.push((&x.0,x.1-self.x,x.2-self.y))
+                    });
+                }
+            }
+            proximity_blocks
     }
 
 }
