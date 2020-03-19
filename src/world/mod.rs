@@ -1,11 +1,6 @@
 //Going to become more complicated because lifetime specifiers
 // Game object for test
-extern crate sdl2;
 
-use sdl2::rect::Rect;
-use sdl2::pixels::Color;
-use sdl2::video::Window;
-use sdl2::render::Canvas;
 
 
 
@@ -46,10 +41,6 @@ impl World {
         }
     }
 
-    pub fn render(&mut self, canvas : &mut Canvas<Window>)
-    {
-
-    }
 
 
 
@@ -62,6 +53,10 @@ impl World {
 
         println!("===================================");
 
+    }
+
+    pub fn load_objects(&mut self){
+        
     }
 
 
