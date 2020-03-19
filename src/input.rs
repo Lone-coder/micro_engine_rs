@@ -1,4 +1,4 @@
-//Process input fro muser
+//Process input from user
 pub fn input(){
 
 	print!("output haha");

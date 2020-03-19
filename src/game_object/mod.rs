@@ -6,6 +6,7 @@ pub struct GameObject{
     animation_handle:Option<u8>,
     pub props:Option<u8>
 }
+
 impl GameObject{
     pub fn new()->GameObject{
         GameObject{

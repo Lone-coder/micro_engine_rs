@@ -10,15 +10,17 @@ pub mod tile_object;
 
 // SDL2 crate
 extern crate sdl2;
-
 pub use sdl2::video::Window;
 pub use sdl2::event::Event;
 pub use sdl2::pixels::Color;
 pub use sdl2::keyboard::Keycode;
 pub use sdl2::rect::Rect;
+
+//some std imports
 pub use std::collections::{HashMap,HashSet};
 pub use std::time::{Duration, Instant};
 
+//engine data struct (likely to change)
 pub struct Engine{
     canvas : sdl2::render::Canvas<Window>,
     event_pump : sdl2::EventPump,
@@ -85,6 +87,7 @@ impl Engine{
     		render(&mut self.canvas);
     		self.canvas.present();
 
+            //uncomment below statement to cap FPS at 60
     	    //std::thread::sleep(std::time::Duration::from_millis(16)); //waiting for 60fps 1 /60 = 0.016 secs
 
     		delta_time = start.elapsed().as_secs_f32();
@@ -100,6 +103,8 @@ impl Engine{
     			min_fps = fps;
     		}
         }
+
+        println!("minFPS = {:?}, maxFPS = {:?}", min_fps, max_fps);
 
     }
 

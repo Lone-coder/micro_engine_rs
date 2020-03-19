@@ -1,9 +1,11 @@
 //default template for micro engine
 use micro_engine_rs;
+use micro_engine_rs::game_object;
 
+
+//3 function called evvery frame
 fn handle_events(event_pump : &mut sdl2::EventPump)
 {
-
 }
 
 fn update(delta_time :f32)
@@ -19,6 +21,8 @@ fn render(canvas : &mut sdl2::render::Canvas<sdl2::video::Window>)
 
 fn main()
 {
+	let player = game_object::GameObject::new();
+
 	let mut engine = micro_engine_rs::Engine::init_engine(800, 600, "Micro engine test");
 
 	engine.run(update, handle_events, render);
