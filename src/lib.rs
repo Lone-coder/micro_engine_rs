@@ -79,6 +79,9 @@ impl Engine{
 
             handle_events(&mut self.event_pump);
             update(delta_time);
+
+            cam.x += (100.0 * delta_time) as i32;
+
             //rendering routine
     		self.canvas.set_draw_color(Color::RGB(0, 0, 0));
     		self.canvas.clear();
@@ -104,7 +107,6 @@ impl Engine{
         }
 
         println!("minFPS = {:?}, maxFPS = {:?}", min_fps, max_fps);
-
     }
 
 }

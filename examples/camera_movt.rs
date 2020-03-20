@@ -3,7 +3,7 @@ use micro_engine_rs::{world,camera};
 
 
 fn camera_movt_test(){
-        let mut _world = world::World::generate(6,6,1600,1200);
+        let mut _world = world::World::generate(6,6,800,600);
         let mut _cam = camera::Camera::create(800,600,Some(&_world));
 
     for _ in 0..6{
@@ -22,8 +22,10 @@ fn camera_movt_test(){
 fn main()
 {
     //Initialization
-    let mut _world = world::World::generate(6,6,1600,1200);
-    let mut _cam = camera::Camera::create(800,600,Some(&_world));
+    let mut _world = world::World::generate(6, 6, 800, 600);
+    let mut _cam = camera::Camera::create(800, 600, Some(&_world));
+    _cam.x = (800 * 3);
+    _cam.y = (600 * 3);
 
 	let mut engine = micro_engine_rs::Engine::init_engine(800, 600, "Camera movement test");
 
@@ -40,7 +42,6 @@ fn main()
 	fn render(canvas : &mut sdl2::render::Canvas<sdl2::video::Window>)
 	{
 	}
-
 
 	engine.run(update, handle_events, render, &mut _cam);
 }

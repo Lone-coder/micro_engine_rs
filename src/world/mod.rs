@@ -2,8 +2,9 @@
 // Game object for test
 pub mod object_loader;
 
+use rand::prelude::*;
 
-//Objects in a block
+//Block data
 pub struct BlockObjects{
     pub object:Vec<(super::game_object::GameObject,i32,i32)>,
 }
@@ -18,34 +19,37 @@ impl World {
 
     // generates a new world
     // The initial objects are placed for tests
-    pub fn generate(blocks_x:usize,blocks_y:usize,_block_width:i32,_block_height:i32) -> World{
+    pub fn generate(blocks_x:usize,blocks_y:usize,_block_width:i32,_block_height:i32) -> World {
 
-        if blocks_x < 6||blocks_y < 6{
+        if blocks_x < 6 || blocks_y < 6{
              panic!("There must be atleast 6 x and 6 y blocks")
         }
 
+        let mut rng = rand::thread_rng();
 
-        let mut map:Vec<Vec<BlockObjects>>=Vec::new();
+        let mut map:Vec<Vec<BlockObjects>> = Vec::new();
+
         for m in 0..blocks_y{
             map.push(Vec::new());
 
-            for n in 0..blocks_x{
+            for n in 0..blocks_x {
                 map[m].push(
-                    BlockObjects{
+                    BlockObjects {
+                        //one game object at center of each block
                         object : vec![(super::game_object::GameObject::new(),
-                                        _block_width * ((n) as i32) + _block_width/2 ,
-                                        _block_height * ((n) as i32) +_block_height/2 )]
+                                        _block_width * ((n) as i32) + rng.gen_range(0, _block_width) ,
+                                        _block_height * ((n) as i32) + rng.gen_range(0, _block_height) )]
                     }
                 )
             }
         }
 
-    World{
-        block_map:map,
-        block_width:_block_width  as i32,
-        block_height:_block_height as i32
-        }
+    World {
+        block_map: map,
+        block_width: _block_width  as i32,
+        block_height: _block_height as i32
     }
+}
 
     //for tests
     pub fn overview_display(&mut self){
@@ -66,7 +70,6 @@ impl World {
                 })
             })
     }
-
 
 
     pub fn load_object(&mut self,coord:(i32,i32),_value:super::game_object::GameObject){
