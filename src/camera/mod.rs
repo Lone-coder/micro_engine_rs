@@ -2,7 +2,6 @@
 /// Here &'a world implies that the Camera lives atleast for as long as the world lives
 /// or any reference to 'a musn't live longer than it
 
-
 pub struct Camera<'a,'b>{
     pub x:i32,
     pub y:i32,
@@ -11,7 +10,6 @@ pub struct Camera<'a,'b>{
     scene_objects:Vec<& 'b super::game_object::GameObject>,
     pub world:Option<&'a super::world::World>,
 }
-
 
 impl<'a,'b> Camera<'a,'b>{
     pub fn create(width:i32,height:i32,_world:Option<&'a super::world::World>)->Camera<'a,'b>{

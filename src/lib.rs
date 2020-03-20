@@ -88,7 +88,7 @@ impl Engine{
     		self.canvas.present();
 
             //uncomment below statement to cap FPS at 60
-    	    //std::thread::sleep(std::time::Duration::from_millis(16)); //waiting for 60fps 1 /60 = 0.016 secs
+    	    std::thread::sleep(std::time::Duration::from_millis(16)); //waiting for 60fps 1 /60 = 0.016 secs
 
     		delta_time = start.elapsed().as_secs_f32();
     		let fps = 1.0 / delta_time;

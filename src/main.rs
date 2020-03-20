@@ -6,6 +6,7 @@ use micro_engine_rs::game_object;
 //3 function called evvery frame
 fn handle_events(event_pump : &mut sdl2::EventPump)
 {
+
 }
 
 fn update(delta_time :f32)
