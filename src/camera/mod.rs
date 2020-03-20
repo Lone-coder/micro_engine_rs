@@ -103,8 +103,20 @@ impl<'a,'b> Camera<'a,'b>{
     pub fn render_scene_objects(&mut self, canvas : &mut sdl2::render::Canvas<sdl2::video::Window>) {
         self.get_objs_in_scene().iter().for_each( |vec_obj| {
             //rendering filled rects in place of static gameobjects
+
             canvas.set_draw_color(Color::RGB(255, 210, 0));
-            canvas.fill_rect(Rect::new(vec_obj.1, vec_obj.2, 20, 20));
+            canvas.fill_rect(Rect::new(vec_obj.1, vec_obj.2, 20, 20)).unwrap();
         });
+    }
+
+
+    pub fn print_params(&mut self){
+
+                println!("The coordinates are : ({:?},{:?})",self.x,self.y );
+                println!("The objects are :");
+                println!("{:?}",self.get_objs_in_scene().iter().map(|x| {(x.1,x.2)}).collect::<Vec<(i32,i32)>>());
+                println!("The block coordinates are : ({:?})",self.get_block() );
+                println!("The world width and height are: {:?}",(self.world.unwrap().block_width,self.world.unwrap().block_height) );
+
     }
 }

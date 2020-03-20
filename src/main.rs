@@ -4,7 +4,7 @@ use micro_engine_rs::{game_object, camera};
 
 fn main()
 {
-	let player = game_object::GameObject::new(0.0, 0.0);
+	//let player = game_object::GameObject::new(0.0, 0.0);
 	let mut cam = camera::Camera::create(800, 600, None);
 
 	let mut engine = micro_engine_rs::Engine::init_engine(800, 600, "Micro engine test");
