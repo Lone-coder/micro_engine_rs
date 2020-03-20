@@ -1,7 +1,6 @@
 //Micro Engine core modules
 pub mod controller;
 pub mod window;
-pub mod input;
 pub mod world;
 pub mod game_object;
 pub mod camera;
@@ -108,4 +107,8 @@ impl Engine{
 
     }
 
+}
+
+pub fn print_bar(){
+    println!("=========================================================================");
 }
