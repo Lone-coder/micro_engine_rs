@@ -56,7 +56,7 @@ impl Engine{
 
     pub fn run( &mut self, update : fn(delta_time : f32),
                 handle_events : fn(event_pump : &mut sdl2::EventPump),
-                render : fn(canvas : &mut sdl2::render::Canvas<Window>) )
+                render : fn(canvas : &mut sdl2::render::Canvas<Window>),cam : &mut camera::Camera)
     {
         let mut running = true;
     	let mut delta_time = 0.005;
@@ -79,10 +79,10 @@ impl Engine{
 
             handle_events(&mut self.event_pump);
             update(delta_time);
-
             //rendering routine
     		self.canvas.set_draw_color(Color::RGB(0, 0, 0));
     		self.canvas.clear();
+            cam.render_scene_objects(&mut self.canvas);
     		render(&mut self.canvas);
     		self.canvas.present();
 

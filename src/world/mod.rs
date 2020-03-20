@@ -3,12 +3,10 @@
 pub mod object_loader;
 
 
-
 //Objects in a block
 pub struct BlockObjects{
     pub object:Vec<(super::game_object::GameObject,i32,i32)>,
 }
-
 
 pub struct World{
     pub block_map:Vec<Vec<BlockObjects>>,
@@ -20,7 +18,7 @@ impl World {
 
     // generates a new world
     // The initial objects are placed for tests
-    pub fn generate(blocks_x:usize,blocks_y:usize,_block_width:i32,_block_height:i32)->World{
+    pub fn generate(blocks_x:usize,blocks_y:usize,_block_width:i32,_block_height:i32) -> World{
 
         if blocks_x < 6||blocks_y < 6{
              panic!("There must be atleast 6 x and 6 y blocks")
@@ -35,11 +33,8 @@ impl World {
                 map[m].push(
                     BlockObjects{
                         object : vec![(super::game_object::GameObject::new(),
-
                                         _block_width * ((n) as i32) + _block_width/2 ,
                                         _block_height * ((n) as i32) +_block_height/2 )]
-
-              
                     }
                 )
             }
@@ -47,13 +42,10 @@ impl World {
 
     World{
         block_map:map,
-
         block_width:_block_width  as i32,
         block_height:_block_height as i32
         }
     }
-
-
 
     //for tests
     pub fn overview_display(&mut self){
