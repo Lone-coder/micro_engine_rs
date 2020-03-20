@@ -5,6 +5,7 @@ pub struct GameObject{
     physics_handle:Option<u8>,      // this could be an option
     animation_handle:Option<u8>,
     pub props:Option<u8>,
+    name:Option<String>
 }
 
 impl GameObject{
@@ -14,6 +15,7 @@ impl GameObject{
             physics_handle:None,
             animation_handle:None,
             props:None,
+            name:None,
         }
     }
 }

@@ -15,6 +15,9 @@ pub use sdl2::pixels::Color;
 pub use sdl2::keyboard::Keycode;
 pub use sdl2::rect::Rect;
 
+// Serde for creating an object loader
+extern crate serde_json;
+
 //some std imports
 pub use std::collections::{HashMap,HashSet};
 pub use std::time::{Duration, Instant};
@@ -81,7 +84,7 @@ impl Engine{
             update(delta_time);
 
             cam.x += (100.0 * delta_time) as i32;
-
+            //cam.print_params();
             //rendering routine
     		self.canvas.set_draw_color(Color::RGB(0, 0, 0));
     		self.canvas.clear();
