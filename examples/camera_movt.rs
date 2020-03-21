@@ -2,8 +2,6 @@ use micro_engine_rs;
 use micro_engine_rs::{world,camera};
 
 
-
-
 fn main()
 {
     //Initialization
