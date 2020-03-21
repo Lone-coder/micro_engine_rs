@@ -1,6 +1,7 @@
 use micro_engine_rs;
 use micro_engine_rs::{world,camera};
 
+use sdl2;
 
 fn main()
 {
@@ -19,6 +20,15 @@ fn main()
         let instant = std::time::Instant::now();
 
         _cam.x += (1000.0 * engine.delta_time() ) as i32;
+
+        engine.canvas.set_draw_color(sdl2::pixels::Color::RGB(0, 0, 0));
+        engine.canvas.clear();
+
+        engine.canvas.set_draw_color(sdl2::pixels::Color::RGB(255, 210, 0));
+
+        _cam.render_scene_objects(&mut engine.canvas);
+
+        engine.canvas.present();
 
         engine.update(instant);
     }

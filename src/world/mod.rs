@@ -45,7 +45,7 @@ impl World {
                                         //just to clear rls
                                         // if working comment _block_width/2 and uncomment all rng thingies
                                         _block_width * ((n) as i32) + _block_width/2 /*rng.gen_range(0, _block_width)*/ ,
-                                        _block_height * ((m) as i32) + _block_height/2)/*rng.gen_range(0, _block_height) )*/]
+                                        _block_height * ((m) as i32) + _block_height/2 )/*rng.gen_range(0, _block_height) )*/]
                     }
                 )
             }

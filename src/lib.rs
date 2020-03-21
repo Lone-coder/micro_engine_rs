@@ -24,8 +24,8 @@ pub use std::time::{Duration, Instant};
 
 //engine data struct (likely to change)
 pub struct Engine{
-    canvas : sdl2::render::Canvas<Window>,
-    event_pump : sdl2::EventPump,
+    pub canvas : sdl2::render::Canvas<Window>,
+    pub event_pump : sdl2::EventPump,
     running : bool,
     delta_time : f32,
 }
@@ -61,10 +61,6 @@ impl Engine{
 
     }
 
-    pub fn start() {
-        let start = Instant::now();
-    }
-
     pub fn is_running(& self) -> bool {
         self.running
     }
@@ -84,7 +80,6 @@ impl Engine{
 	            _=>(),
 	        }
 	    }
-
         //uncomment below statement to cap FPS at 60
 	    std::thread::sleep(std::time::Duration::from_millis(16)); //waiting for 60fps 1 /60 = 0.016 secs
 
