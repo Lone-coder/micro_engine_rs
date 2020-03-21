@@ -69,6 +69,19 @@ impl World {
 
     }
 
+
+    //for tests
+    pub fn obj_disp_per_block(&self){
+        for m in self.block_map.iter(){
+            for n in m.iter(){
+                print!("|{:?}|",n.object.iter().map(|x| {
+                    (x.1,x.2)
+                }).collect::<Vec<(i32,i32)>>());
+            }
+            println!("");
+        }
+    }
+
     //for tests
     pub fn obj_display(&mut self){
             self.block_map.iter().for_each(|x|{
@@ -96,6 +109,10 @@ impl World {
             self.load_object((v.1,v.2),super::game_object::GameObject::new());
         });
 
+    }
+
+    pub fn get_max_blocks(&self)->(i32,i32){
+        ((self.block_map[0].len()-1) as i32,(self.block_map.len()-1) as i32)
     }
 
 
