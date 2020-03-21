@@ -2,8 +2,6 @@ use micro_engine_rs;
 use micro_engine_rs::{world,camera};
 
 
-
-
 fn main()
 {
     //Initialization{:?}
@@ -20,19 +18,12 @@ fn main()
 
 	let mut engine = micro_engine_rs::Engine::init_engine(800, 600, "Camera movement test");
 
-	fn handle_events(event_pump : &mut sdl2::EventPump)
-	{
+	while engine.is_running() {
 
-	}
+        let instant = std::time::Instant::now();
 
-	fn update(delta_time :f32)
-	{
+        _cam.x += (1000.0 * engine.delta_time() ) as i32;
 
-	}
-
-	fn render(canvas : &mut sdl2::render::Canvas<sdl2::video::Window>)
-	{
-	}
-
-	engine.run(update, handle_events, render, &mut _cam);
+        engine.update(instant);
+    }
 }
