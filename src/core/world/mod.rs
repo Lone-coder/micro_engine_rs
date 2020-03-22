@@ -12,7 +12,7 @@ pub mod object_loader;
 
 //Block data
 pub struct BlockObjects{
-    pub object:Vec<(super::game_object::GameObject,i32,i32)>,
+    pub object:Vec<(super::gameobject::GameObject,i32,i32)>,
 }
 
 pub struct World{
@@ -41,7 +41,7 @@ impl World {
                 map[m].push(
                     BlockObjects {
                         //one game object at center of each block
-                        object :  vec![(super::game_object::GameObject::new(),
+                        object :  vec![(super::gameobject::GameObject::new(),
                                         //just to clear rls
                                         // if working comment _block_width/2 and uncomment all rng thingies
                                         _block_width * ((n) as i32) + _block_width/2 /*rng.gen_range(0, _block_width)*/ ,
@@ -65,7 +65,6 @@ impl World {
                 x.iter().for_each(|_y| print!("[]"));
                 println!();
                 });
-                super::print_bar();
 
     }
 
@@ -94,7 +93,7 @@ impl World {
     }
 
 
-    pub fn load_object(&mut self,coord:(i32,i32),_value:super::game_object::GameObject){
+    pub fn load_object(&mut self,coord:(i32,i32),_value:super::gameobject::GameObject){
         self.block_map[(coord.1/self.block_height) as usize ]
                       [(coord.0/self.block_width) as usize ]
                       .object.push((_value,coord.0,coord.1));
@@ -106,7 +105,7 @@ impl World {
     // or not
     pub fn load_objs_from_json(&mut self){
         object_loader::loader().iter().for_each(|v|{
-            self.load_object((v.1,v.2),super::game_object::GameObject::new());
+            self.load_object((v.1,v.2),super::gameobject::GameObject::new());
         });
 
     }

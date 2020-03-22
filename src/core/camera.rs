@@ -1,9 +1,8 @@
 /// Useful info:
 /// Here &'a world implies that the Camera lives atleast for as long as the world lives
 /// or any reference to 'a musn't live longer than it
-use super::Rect;
-use super::Color;
-
+use sdl2::rect::Rect;
+use sdl2::pixels::Color;
 use sdl2 ::event::Event;
 use sdl2 ::keyboard::Keycode;
 
@@ -12,7 +11,7 @@ pub struct Camera<'a,'b>{
     pub y:i32,
     pub width:i32,
     pub height:i32,
-    scene_objects:Vec<& 'b super::game_object::GameObject>,
+    scene_objects:Vec<& 'b super::gameobject::GameObject>,
     pub world:Option<&'a super::world::World>,
 }
 
@@ -51,7 +50,7 @@ impl<'a,'b> Camera<'a,'b>{
     }
 
 
-    pub fn add_obj(&mut self,obj:&'b super::game_object::GameObject) {
+    pub fn add_obj(&mut self,obj:&'b super::gameobject::GameObject) {
         self.scene_objects.push(obj);
     }
 
@@ -104,9 +103,9 @@ impl<'a,'b> Camera<'a,'b>{
 
     */
 
-    pub fn get_objs_in_scene(&mut self) -> Vec<(&super::game_object::GameObject,i32,i32)> {
+    pub fn get_objs_in_scene(&mut self) -> Vec<(&super::gameobject::GameObject,i32,i32)> {
 
-        let mut proximity_blocks:Vec<(&super::game_object::GameObject,i32,i32)> = Vec::new();
+        let mut proximity_blocks:Vec<(&super::gameobject::GameObject,i32,i32)> = Vec::new();
 
         let world = self.world.unwrap();
         let block = self.get_block().unwrap();
@@ -147,10 +146,6 @@ impl<'a,'b> Camera<'a,'b>{
                 false
             }
     }
-
-
-
-
 
 
     pub fn render_scene_objects(&mut self, canvas : &mut sdl2::render::Canvas<sdl2::video::Window>) {

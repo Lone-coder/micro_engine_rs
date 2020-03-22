@@ -1,12 +1,12 @@
 use super::world;
 use super::camera;
-use super::game_object;
+use super::gameobject;
 
 struct Level<'b,'a>
 {
     world : world::World,
     main_camera : camera::Camera<'a, 'b>,
-    game_objects : Vec<game_object::GameObject>,
+    game_objects : Vec<gameobject::GameObject>,
 }
 
 impl Level<'_, '_> {

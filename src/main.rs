@@ -1,6 +1,6 @@
 //default template for micro engine
 use micro_engine_rs;
-use micro_engine_rs::{game_object, camera};
+use micro_engine_rs::core::{gameobject, camera};
 
 fn main()
 {

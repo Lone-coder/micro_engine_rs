@@ -1,12 +1,7 @@
 //Micro Engine core modules
-pub mod controller;
-pub mod window;
-pub mod world;
-pub mod game_object;
-pub mod camera;
-pub mod level;
-pub mod tile_object;
-pub mod input;
+pub mod core;
+pub mod physics;
+pub mod render;
 
 // SDL2 crate
 extern crate sdl2;
@@ -87,8 +82,4 @@ impl Engine{
 		self.delta_time = instant.elapsed().as_secs_f32();
     }
 
-}
-
-pub fn print_bar(){
-    println!("=========================================================================");
 }
