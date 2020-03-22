@@ -23,9 +23,8 @@ fn main()
 
         engine.canvas.set_draw_color(sdl2::pixels::Color::RGB(0, 0, 0));
         engine.canvas.clear();
-
         engine.canvas.set_draw_color(sdl2::pixels::Color::RGB(255, 210, 0));
-
+        //put rendering code here
         _cam.render_scene_objects(&mut engine.canvas);
 
         engine.canvas.present();
