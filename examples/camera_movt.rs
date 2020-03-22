@@ -2,7 +2,7 @@ use micro_engine_rs::HashSet;
 use micro_engine_rs;
 use micro_engine_rs::Keycode;
 use micro_engine_rs::core::{world,camera};
-use micro_engine_rs::input_testing;
+
 
 use sdl2;
 
@@ -15,12 +15,16 @@ fn main()
 
     let mut _cam = camera::Camera::create(800, 600, Some(&_world));
 
-    _cam.x = (800 * 3);
-    _cam.y = (600 * 3);
+    _cam.x = 800 * 3;
+    _cam.y = 600 * 3;
 
     println!("{:?}",() );
 
 	let mut engine = micro_engine_rs::Engine::init_engine(800, 600, "Camera movement test");
+
+
+
+    // instance of engine running
 
 	while engine.is_running() {
 
@@ -44,6 +48,7 @@ fn main()
         move_cam(& mut _cam,engine.input_handle(),dt);
     }
 }
+
 
 
 fn move_cam(cam:&mut camera::Camera,keys:HashSet<Keycode>,dt:f32){

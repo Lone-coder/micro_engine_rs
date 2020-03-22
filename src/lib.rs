@@ -69,12 +69,17 @@ impl Engine{
         self.delta_time
     }
 
+
+
     pub fn update(&mut self, instant : std::time::Instant) {
         //uncomment below statement to cap FPS at 60
 	    std::thread::sleep(std::time::Duration::from_millis(16)); //waiting for 60fps 1 /60 = 0.016 secs
 
 		self.delta_time = instant.elapsed().as_secs_f32();
     }
+
+
+
 
 
     //Quits the game or returns all keys pressed
