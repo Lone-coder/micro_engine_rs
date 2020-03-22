@@ -1,5 +1,8 @@
+use micro_engine_rs::HashSet;
 use micro_engine_rs;
+use micro_engine_rs::Keycode;
 use micro_engine_rs::core::{world,camera};
+use micro_engine_rs::input_testing;
 
 use sdl2;
 
@@ -27,8 +30,6 @@ fn main()
 
         //_cam.x += (1000.0 * dt ) as i32;
 
-        _cam.camera_event(&mut engine.event_pump, &dt);
-
         engine.canvas.set_draw_color(sdl2::pixels::Color::RGB(0, 0, 0));
         engine.canvas.clear();
 
@@ -39,5 +40,26 @@ fn main()
         engine.canvas.present();
 
         engine.update(instant);
+
+        move_cam(& mut _cam,engine.input_handle(),dt);
     }
+}
+
+
+fn move_cam(cam:&mut camera::Camera,keys:HashSet<Keycode>,dt:f32){
+
+        if keys.contains(&Keycode::Up){
+            cam.y-=(100.0*dt) as i32
+        }
+        if keys.contains(&Keycode::Down){
+            cam.y+=(100.0*dt) as i32
+        }
+
+        if keys.contains(&Keycode::Left){
+            cam.x-=(100.0*dt) as i32
+        }
+
+        if keys.contains(&Keycode::Right){
+            cam.x+=(100.0*dt) as i32
+        }
 }
