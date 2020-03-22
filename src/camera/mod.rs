@@ -110,16 +110,27 @@ impl<'a,'b> Camera<'a,'b>{
 
         let world = self.world.unwrap();
         let block = self.get_block().unwrap();
-        if self.is_edge_condition(&block){
-            return Vec::new()
-        }
+
+        //debug
+        // returns x,y
+        //println!("");
+        //println!("Current block is {:?}",(block.1,block.0));
 
         for m in 0..3 {
             for n in 0..3 {
+                //debug test
+                if self.is_not_within_bounds((block.1 + 1- m,block.0+1-n)){
+                    continue
+                }
+                println!(" block  map : ({:?},{:?})",block.1 + 1- m,block.0+1-n );
+                                //y                         //x
                 world.block_map[(block.1 + 1- m) as usize][(block.0+1-n) as usize].
                 object.iter()
                 .for_each(|x| {
-                    proximity_blocks.push((&x.0,x.1-self.x,x.2-self.y))
+                    proximity_blocks.push((&x.0,x.1-self.x,x.2-self.y));
+                    //print!("blocks are :{:?}",(x.1,x.2));
+                    //println!("");
+                    //println!(" relative values are {:?}", (x.1-self.x,x.2-self.y));
                 });
             }
         }
@@ -127,72 +138,16 @@ impl<'a,'b> Camera<'a,'b>{
     }
 
 
-    //  Checks if the given block is in the edge
-    pub fn is_edge_condition(&mut self,val:&(i32,i32))->bool{
-        if (val.0==0 ||val.0 == self.world.unwrap().block_map[0].len() as i32)||
-        (val.1==0 || val.1 ==self.world.unwrap().block_map.len() as i32){
-            return true
-        }else{
-            return false
-        }
-    }
 
-
-    // scheduled for testing
-    // inefficient need to be faster but will suffice for now
-    pub fn get_objs_in_scene_test(&mut self)->Vec<(&super::game_object::GameObject,i32,i32)>{
-            let mut out:Vec<(&super::game_object::GameObject,i32,i32)>=Vec::new();
-            let blocks_max=self.world.unwrap().get_max_blocks();
-            if let Some(val)=self.get_adj_blocks()
-            {
-            val.iter().for_each(|x|{
-                self.world.unwrap().block_map[x.0 as usize ][x.1 as usize]
-                .object
-                .iter()
-                .for_each(|y|{
-                    out.push((&y.0,self.x-y.1,self.y-y.2))
-                });
-            });
+    pub fn is_not_within_bounds(&self,block:(i32,i32))->bool{
+            let max_blocks=self.world.unwrap().get_max_blocks();
+            if ((block.0<0)||(block.0>max_blocks.0))||((block.1<0)||(block.1>max_blocks.1)){
+                true
+            }else{
+                false
             }
-            else{
-                if self.x<0{
-                    self.x=0
-                }
-                if self.x>blocks_max.0{
-                    self.x=blocks_max.0
-                }
-                if self.y<0{
-                    self.y=0
-                }
-                if self.y>blocks_max.1{
-                    self.y=blocks_max.1
-                }
-            }
-            out
     }
 
-
-    //scheduled for testing
-    pub fn get_adj_blocks(&mut self )->Option<Vec<(i32,i32)>>{
-        let max_block=self.world.unwrap().get_max_blocks();
-        let mut out:Vec<(i32,i32)>=Vec::new();
-        let block=self.get_block().unwrap();
-        for m in 0..3{
-                for  n in 0..3{
-                    if (block.1+1-m,block.0+1-n) >= (0,0) && (max_block.0-(block.1+1-m),max_block.1-(block.0+1-n)) >= (0,0){
-                        out.push((block.1+1-m,block.0+1-m))
-                    }
-                }
-        }
-
-
-        if out.is_empty(){
-            None
-        }
-        else{
-        Some(out)
-        }
-    }
 
 
 
