@@ -13,7 +13,7 @@ fn main()
     let mut _cam = camera::Camera::create(800, 600, Some(&_world));
 
     _cam.x = (800 * 3);
-    _cam.y = (600*3);
+    _cam.y = (600 * 3);
 
     println!("{:?}",() );
 
