@@ -10,7 +10,7 @@ use std::io::Read;
 
 // Testing -Debug phase
 // Everything is unwraped because it is for testing now
-// More clarifications sto be done
+// More clarifications to be done
 // more error handling to be done
 pub fn loader()->Vec<(String,i32,i32)>{
 
@@ -29,6 +29,7 @@ pub fn loader()->Vec<(String,i32,i32)>{
         (_object["type"].as_str().unwrap().to_string(),_object["x"].as_i64().unwrap() as i32,_object["y"].as_i64().unwrap() as i32)
     }).collect::<Vec<(String,i32,i32)>>();
 
+    // For tests
     println!("val is {:?}",val );
 
     val
