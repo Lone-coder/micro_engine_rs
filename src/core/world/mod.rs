@@ -8,11 +8,12 @@ Just a note here:
 // Game object for test
 pub mod object_loader;
 
+use super::gameobject;
 //use rand::prelude::*;
 
 //Block data
 pub struct BlockObjects{
-    pub object:Vec<(super::gameobject::GameObject,i32,i32)>,
+    pub object:Vec<(gameobject::GameObject,i32,i32)>,
 }
 
 pub struct World{
@@ -41,7 +42,7 @@ impl World {
                 map[m].push(
                     BlockObjects {
                         //one game object at center of each block
-                        object :  vec![(super::gameobject::GameObject::new(),
+                        object :  vec![(gameobject::GameObject::new(),
                                         //just to clear rls
                                         // if working comment _block_width/2 and uncomment all rng thingies
                                         _block_width * ((n) as i32) + _block_width/2 /*rng.gen_range(0, _block_width)*/ ,
@@ -105,7 +106,7 @@ impl World {
     // or not
     pub fn load_objs_from_json(&mut self){
         object_loader::loader().iter().for_each(|v|{
-            self.load_object((v.1,v.2),super::gameobject::GameObject::new());
+            self.load_object((v.1,v.2),gameobject::GameObject::new());
         });
 
     }

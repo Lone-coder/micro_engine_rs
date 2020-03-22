@@ -1,21 +1,18 @@
 //all objects of u8 type are to be redefined
+use super::components::{physics, render, transform};
 
-pub struct GameObject{
-    actions:Option<u8>,
-    physics_handle:Option<u8>,      // this could be an option
-    animation_handle:Option<u8>,
-    pub props:Option<u8>,
-    name:Option<String>
+pub struct GameObject {
+    transform: Option<transform::Transform>,
+    physics: Option<physics::Physics>,
+    render: Option<render::Render>,
 }
 
-impl GameObject{
-    pub fn new() -> GameObject{
-        GameObject{
-            actions:None,
-            physics_handle:None,
-            animation_handle:None,
-            props:None,
-            name:None,
+impl GameObject {
+    pub fn new() -> GameObject {
+        GameObject {
+            transform: None,
+            physics: None,
+            render: None,
         }
     }
 }
