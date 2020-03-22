@@ -17,13 +17,14 @@ fn main()
 
     println!("{:?}",() );
 
-	let mut engine = micro_engine_rs::Engine::init_engine(800, 600, "Camera movement test");
+	let mut engine = micro_engine_rs::Engine::init_engine(1024, 768, "Camera movement test");
+
 
 	while engine.is_running() {
 
         let instant = std::time::Instant::now();
 
-        _cam.x += (1000.0 * engine.delta_time() ) as i32;
+        _cam.x += (100.0 * engine.delta_time() ) as i32;
 
         engine.canvas.set_draw_color(sdl2::pixels::Color::RGB(0, 0, 0));
         engine.canvas.clear();
@@ -35,5 +36,8 @@ fn main()
         engine.canvas.present();
 
         engine.update(instant);
+
+        //_cam.print_params();
+
     }
 }
