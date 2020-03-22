@@ -3,6 +3,8 @@ pub mod core;
 pub mod physics;
 pub mod render;
 
+// Testing modules
+pub mod input_testing;
 // SDL2 crate
 extern crate sdl2;
 pub use sdl2::video::Window;
@@ -24,6 +26,7 @@ pub struct Engine{
     pub event_pump : sdl2::EventPump,
     running : bool,
     delta_time : f32,
+    control_obj:Option<core::gameobject::GameObject>
 }
 
 impl Engine{
@@ -52,7 +55,8 @@ impl Engine{
             canvas : _canvas,
             event_pump : _event_pump,
             running : true,
-            delta_time : 0.005
+            delta_time : 0.005,
+            control_obj:None
         }
 
     }
@@ -66,9 +70,17 @@ impl Engine{
     }
 
     pub fn update(&mut self, instant : std::time::Instant) {
+        //uncomment below statement to cap FPS at 60
+	    std::thread::sleep(std::time::Duration::from_millis(16)); //waiting for 60fps 1 /60 = 0.016 secs
 
-        //event handling
-	    for event in self.event_pump.poll_iter() {
+		self.delta_time = instant.elapsed().as_secs_f32();
+    }
+
+
+    //Quits the game or returns all keys pressed
+    pub fn input_handle(&mut self)->HashSet<Keycode>{
+
+        for event in self.event_pump.poll_iter() {
 	        match event {
 	            Event::Quit {..} | Event::KeyDown {keycode: Some(Keycode::Escape), ..} => {
 	                    self.running = false;
@@ -76,10 +88,14 @@ impl Engine{
 	            _=>(),
 	        }
 	    }
-        //uncomment below statement to cap FPS at 60
-	    std::thread::sleep(std::time::Duration::from_millis(16)); //waiting for 60fps 1 /60 = 0.016 secs
 
-		self.delta_time = instant.elapsed().as_secs_f32();
+        let key_presses:HashSet<Keycode>=self.event_pump
+                        .keyboard_state()
+                        .pressed_scancodes()
+                        .filter_map(Keycode::from_scancode).collect();
+
+        key_presses
     }
+
 
 }

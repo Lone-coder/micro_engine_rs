@@ -28,7 +28,7 @@ impl<'a,'b> Camera<'a,'b>{
     }
 
     pub fn display_scene_objects(&mut self){
-        self.scene_objects.iter().for_each(|x| println!("{:?}",x.props ));
+        self.scene_objects.iter().for_each(|x| println!(""));
     }
 
     pub fn attach_world(&mut self, world: &'a super::world::World){
@@ -68,21 +68,25 @@ impl<'a,'b> Camera<'a,'b>{
         for event in event_pump.poll_iter() {
 	        match event {
 	            Event::KeyDown {keycode: Some(Keycode::Up), ..} => {
-                        self.y -= (500.0 * (*dt)) as i32;
+                        self.y -= (1000.0 * (*dt)) as i32;
 	                },
                 Event::KeyDown {keycode: Some(Keycode::Down), ..} => {
-                        self.y += (500.0 * (*dt)) as i32;
+                        self.y += (1000.0 * (*dt)) as i32;
                     },
                 Event::KeyDown {keycode: Some(Keycode::Right), ..} => {
-                        self.x += (500.0 * (*dt)) as i32;
+                        self.x += (1000.0 * (*dt)) as i32;
                     },
                 Event::KeyDown {keycode: Some(Keycode::Left), ..} => {
-                        self.x -= (500.0 * (*dt)) as i32;
+                        self.x -= (1000.0 * (*dt)) as i32;
                     },
 	            _=>(),
 	        }
 	    }
     }
+
+
+
+
 
     // Returns all objects in proximity for collisions
     // and rendering
@@ -166,5 +170,9 @@ impl<'a,'b> Camera<'a,'b>{
                 println!("The block coordinates are : ({:?})",self.get_block() );
                 println!("The world width and height are: {:?}",(self.world.unwrap().block_width,self.world.unwrap().block_height) );
 
+    }
+
+    pub fn follow(){
+        
     }
 }
