@@ -6,6 +6,7 @@ pub mod game_object;
 pub mod camera;
 pub mod level;
 pub mod tile_object;
+pub mod input;
 
 // SDL2 crate
 extern crate sdl2;
