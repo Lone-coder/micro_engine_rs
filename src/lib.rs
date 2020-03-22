@@ -4,7 +4,6 @@ pub mod physics;
 pub mod render;
 
 // Testing modules
-pub mod input_testing;
 // SDL2 crate
 extern crate sdl2;
 pub use sdl2::video::Window;
@@ -26,7 +25,6 @@ pub struct Engine{
     pub event_pump : sdl2::EventPump,
     running : bool,
     delta_time : f32,
-    control_obj:Option<core::gameobject::GameObject>
 }
 
 impl Engine{
@@ -47,7 +45,7 @@ impl Engine{
 
         _canvas.set_draw_color(sdl2::pixels::Color::RGBA(0,0,0,255));
 
-        let timer = sdl_context.timer().unwrap();
+        let _timer = sdl_context.timer().unwrap();
 
         let _event_pump = sdl_context.event_pump().unwrap();
 
@@ -56,10 +54,10 @@ impl Engine{
             event_pump : _event_pump,
             running : true,
             delta_time : 0.005,
-            control_obj:None
         }
 
     }
+
 
     pub fn is_running(& self) -> bool {
         self.running
@@ -72,6 +70,7 @@ impl Engine{
 
 
     pub fn update(&mut self, instant : std::time::Instant) {
+
         //uncomment below statement to cap FPS at 60
 	    std::thread::sleep(std::time::Duration::from_millis(16)); //waiting for 60fps 1 /60 = 0.016 secs
 
@@ -82,7 +81,8 @@ impl Engine{
 
 
 
-    //Quits the game or returns all keys pressed
+    // Quits the game or returns all keys pressed
+    // as a HashSet
     pub fn input_handle(&mut self)->HashSet<Keycode>{
 
         for event in self.event_pump.poll_iter() {
