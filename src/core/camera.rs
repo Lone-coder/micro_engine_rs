@@ -173,6 +173,14 @@ impl<'a,'b> Camera<'a,'b>{
     }
 
     pub fn follow(){
-        
+
+    }
+}
+
+
+impl super::Translate for Camera<'_, '_>{
+    fn translate(&mut self,val: (i32, i32)) {
+        self.x+=val.0;
+        self.y+=val.1;
     }
 }

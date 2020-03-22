@@ -6,3 +6,9 @@ pub mod window;
 pub mod world;
 pub mod input;
 pub mod camera;
+
+
+// Trait for moving objects
+pub trait Translate {
+    fn translate (&mut self ,val:(i32,i32));
+}
