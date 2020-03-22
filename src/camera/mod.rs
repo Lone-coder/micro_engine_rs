@@ -4,6 +4,9 @@
 use super::Rect;
 use super::Color;
 
+use sdl2 ::event::Event;
+use sdl2 ::keyboard::Keycode;
+
 pub struct Camera<'a,'b>{
     pub x:i32,
     pub y:i32,
@@ -60,6 +63,27 @@ impl<'a,'b> Camera<'a,'b>{
         }
     }
 
+    //camera movement test
+    pub fn camera_event(&mut self,event_pump : &mut sdl2::EventPump, dt : &f32) {
+
+        for event in event_pump.poll_iter() {
+	        match event {
+	            Event::KeyDown {keycode: Some(Keycode::Up), ..} => {
+                        self.y -= (500.0 * (*dt)) as i32;
+	                },
+                Event::KeyDown {keycode: Some(Keycode::Down), ..} => {
+                        self.y += (500.0 * (*dt)) as i32;
+                    },
+                Event::KeyDown {keycode: Some(Keycode::Right), ..} => {
+                        self.x += (500.0 * (*dt)) as i32;
+                    },
+                Event::KeyDown {keycode: Some(Keycode::Left), ..} => {
+                        self.x -= (500.0 * (*dt)) as i32;
+                    },
+	            _=>(),
+	        }
+	    }
+    }
 
     // Returns all objects in proximity for collisions
     // and rendering

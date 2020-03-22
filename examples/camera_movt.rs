@@ -8,7 +8,6 @@ fn main()
     //Initialization{:?}
     let mut _world = world::World::generate(6, 6, 800, 600);
     _world.load_objs_from_json();
-    _world.obj_disp_per_block();
 
     let mut _cam = camera::Camera::create(800, 600, Some(&_world));
 
@@ -23,7 +22,11 @@ fn main()
 
         let instant = std::time::Instant::now();
 
-        _cam.x += (1000.0 * engine.delta_time() ) as i32;
+        //_cam.x += (1000.0 * engine.delta_time() ) as i32;
+
+        let dt = engine.delta_time();
+
+        _cam.camera_event(&mut engine.event_pump,&dt);
 
         engine.canvas.set_draw_color(sdl2::pixels::Color::RGB(0, 0, 0));
         engine.canvas.clear();
