@@ -24,4 +24,5 @@ fn translate(&mut self, val: (i32, i32)) {
 
 
  }
+ 
 }

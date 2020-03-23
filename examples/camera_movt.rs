@@ -3,7 +3,6 @@ use micro_engine_rs;
 use micro_engine_rs::Keycode;
 use micro_engine_rs::core::{world,camera};
 
-
 use sdl2;
 
 fn main()
@@ -48,7 +47,6 @@ fn main()
         move_cam(& mut _cam,engine.input_handle(),dt);
     }
 }
-
 
 
 fn move_cam(cam:&mut camera::Camera,keys:HashSet<Keycode>,dt:f32){

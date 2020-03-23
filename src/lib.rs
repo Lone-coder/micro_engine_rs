@@ -67,8 +67,6 @@ impl Engine{
         self.delta_time
     }
 
-
-
     pub fn update(&mut self, instant : std::time::Instant) {
 
         //uncomment below statement to cap FPS at 60
@@ -94,7 +92,7 @@ impl Engine{
 	        }
 	    }
 
-        let key_presses:HashSet<Keycode>=self.event_pump
+        let key_presses:HashSet<Keycode> = self.event_pump
                         .keyboard_state()
                         .pressed_scancodes()
                         .filter_map(Keycode::from_scancode).collect();
