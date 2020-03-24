@@ -1,8 +1,4 @@
-use sdl2::rect::Rect;
-use sdl2::pixels::Color;
-
 use super::math;
-use super::world;
 
 pub struct Camera {
     pub position : math::Vector2,

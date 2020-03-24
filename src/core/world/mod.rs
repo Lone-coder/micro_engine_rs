@@ -13,7 +13,7 @@ pub struct TileBlock {
 }
 
 //world is made of tile blocks
-pub struct World{
+pub struct World {
     pub blocks : Vec<Vec<TileBlock>>,
     pub block_width : u32,
     pub block_height : u32,
@@ -33,18 +33,32 @@ impl World {
         let num_tiles_inrow = world_width / 32; //since each tiles is 32x32 pixels
         let num_tiles_incol = world_height / 32;
 
+        let n_tile_row = _block_height / 32;
+        let n_tile_col = _block_width / 32;
+
         for m in 0..num_blk_col {
 
             _blocks.push(Vec::new());
 
             for n in 0..num_blk_row {
 
-                _blocks[m].push(
-                    TileBlock {
-                        tiles :  vec![tile::Tile::new(0, 0.0, 0.0)],
-                        position : math::Vector2::new( (m as u32 * _block_width) as f32, (n as u32 * _block_height) as f32)
+                let block_x = m as u32 * _block_width;
+                let block_y = n as u32 * _block_height;
+
+                let mut tile_block  = TileBlock {
+                    position : math::Vector2::new( block_x as f32, block_y as f32),
+                    tiles : Vec::new(),
+                };
+
+                for a in 0..n_tile_row {
+                    for b in 0..n_tile_col {
+                        let tile_x = (b * 32) + block_x;
+                        let tile_y = (a * 32) + block_y;
+
+                        tile_block.tiles.push(tile::Tile::new(0, tile_x as f32, tile_y as f32));
                     }
-                )
+                }
+                _blocks[m].push(tile_block);
             }
         }
 
@@ -58,17 +72,37 @@ impl World {
     }
 
     pub fn render(&mut self, canvas : &mut Canvas<Window>, cam : &mut camera::Camera) {
-        canvas.set_draw_color(sdl2::pixels::Color::RGB(210, 10, 0));
 
-        for a in &self.blocks{
-            for b in a{
-                let x = b.position.x - cam.position.x;
-                let y = b.position.y - cam.position.y;
+        let n_tile_row = self.block_height / 32;
+        let n_tile_col = self.block_width / 32;
 
+        for vec_of_block in &self.blocks {
+            for blk in vec_of_block {
+                //drawing
+                canvas.set_draw_color(sdl2::pixels::Color::RGB(255, 0, 0));
+                for a in 0..n_tile_row {
+                    for b in 0..n_tile_col {
+
+                        let tile_x = blk.tiles[(b + (a * n_tile_col)) as usize].position.x - cam.position.x;
+                        let tile_y = blk.tiles[(b + (a * n_tile_col)) as usize].position.y - cam.position.y;
+
+                        canvas.draw_rect(sdl2::rect::Rect::new(tile_x as i32, tile_y as i32, 32, 32)).unwrap();
+
+                    }
+                }
+
+                //world to screen space transform (getting coords relative to camera)
+                let x = blk.position.x - cam.position.x;
+                let y = blk.position.y - cam.position.y;
+
+                //debug draw
+                canvas.set_draw_color(sdl2::pixels::Color::RGB(255, 255, 255));
                 canvas.draw_rect(sdl2::rect::Rect::new(x as i32,
                     y as i32, self.block_width, self.block_height)).unwrap();
             }
         }
+
+
     }
 
 
