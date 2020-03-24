@@ -8,9 +8,9 @@ use sdl2;
 fn main()
 {
     //Initialization{:?}
-    let mut _world = world::World::create_new(6, 6, 20 * 32, 15 * 32);  //block should be multiple of 32
+    let mut _world = world::World::create_new(6, 6, 20 * 32, 15 * 32, 32);  //block  size should be multiple of tile size
 
-    let mut _cam = camera::Camera::create();
+    let mut _cam = camera::Camera::create(800, 600);
 
 	let mut engine = Engine::init_engine(800, 600, "Camera movement test");
 
@@ -37,17 +37,17 @@ fn main()
 fn move_cam(cam:&mut camera::Camera,keys:HashSet<Keycode>,dt:f32) {
 
         if keys.contains(&Keycode::Up) {
-            cam.position.y = cam.position.y - (100.0 * dt);
+            cam.position.y = cam.position.y - (1000.0 * dt);
         }
         if keys.contains(&Keycode::Down) {
-            cam.position.y = cam.position.y + (100.0 * dt);
+            cam.position.y = cam.position.y + (1000.0 * dt);
         }
 
         if keys.contains(&Keycode::Left) {
-            cam.position.x = cam.position.x - (100.0 * dt);
+            cam.position.x = cam.position.x - (1000.0 * dt);
         }
 
         if keys.contains(&Keycode::Right) {
-            cam.position.x = cam.position.x + (100.0 * dt);
+            cam.position.x = cam.position.x + (1000.0 * dt);
         }
 }
