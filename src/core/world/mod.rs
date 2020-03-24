@@ -105,7 +105,7 @@ impl World {
     // Gameobject could be made different
     // or not
     pub fn load_objs_from_json(&mut self){
-        object_loader::loader().iter().for_each(|v|{
+        object_loader::loader("map/map_data.json".to_string()).iter().for_each(|v|{
             self.load_object((v.1,v.2),gameobject::GameObject::new());
         });
 

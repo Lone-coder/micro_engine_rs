@@ -1,4 +1,5 @@
 //all objects of u8 type are to be redefined
+pub mod object_stack;
 use crate::core::Translate;
 use super::components::{physics, render, transform};
 

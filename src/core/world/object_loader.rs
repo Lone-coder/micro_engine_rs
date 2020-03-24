@@ -10,11 +10,11 @@ use std::io::Read;
 // Everything is unwraped because it is for testing now
 // More clarifications to be done
 // more error handling to be done
-pub fn loader()-> Vec<(String,i32,i32)> {
+pub fn loader(f:String)-> Vec<(String,i32,i32)> {
 
     let mut p: String = String::new();
 
-    File::open("map/map_data.json").unwrap()
+    File::open(f).unwrap()
                                    .read_to_string(&mut p);
 
     let v : serde_json::Value = serde_json::from_str(&p).unwrap();

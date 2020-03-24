@@ -33,6 +33,10 @@ impl Vector2 {
         (self.dot(other)/(self.modulus()*other.modulus())).acos()
     }
 
+    pub fn dot_2(a:&Self,b:&Self)->f32{
+        a.x*b.x + a.y*b.y
+    }
+
 
 }
 

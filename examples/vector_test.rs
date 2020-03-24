@@ -17,7 +17,7 @@ fn main(){
 
     println!("{:?}",a==b );
 
-    println!("{:?}",a.dot(&b));
+    println!("{:?}",a.dot(&b)/(a.modulus()*b.modulus()));
 
     println!("{:?}",a.find_angle_rel(&b));
 }
