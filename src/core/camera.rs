@@ -6,17 +6,13 @@ use super::world;
 
 pub struct Camera {
     pub position : math::Vector2,
-    pub width : i32,
-    pub height : i32,
 }
 
 impl Camera {
 
-    pub fn create(width : i32, height : i32) -> Camera {
+    pub fn create() -> Camera {
         Camera{
             position : math::Vector2::new(0.0, 0.0),
-            width : width,
-            height : height,
         }
     }
 

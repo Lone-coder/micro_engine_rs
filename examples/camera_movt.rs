@@ -8,9 +8,9 @@ use sdl2;
 fn main()
 {
     //Initialization{:?}
-    let mut _world = world::World::create_new(6, 6, 800, 600);
+    let mut _world = world::World::create_new(6, 6, 400, 300);
 
-    let mut _cam = camera::Camera::create(800, 600);
+    let mut _cam = camera::Camera::create();
 
 	let mut engine = Engine::init_engine(800, 600, "Camera movement test");
 
@@ -24,7 +24,7 @@ fn main()
 
         engine.canvas.set_draw_color(sdl2::pixels::Color::RGB(0, 0, 0));
         engine.canvas.clear();
-
+        _world.render(&mut engine.canvas, &mut _cam);
         engine.canvas.present();
 
         engine.update(instant);

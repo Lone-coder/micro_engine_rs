@@ -1,4 +1,4 @@
-//  testing phase rn
+//testing phase rn
 use serde_json;
 //use crate::serde::{Serializer,Deserializer};
 use super::super::gameobject;
@@ -31,6 +31,4 @@ pub fn loader()-> Vec<(String,i32,i32)> {
     println!("val is {:?}",val );
 
     val
-
-
 }
