@@ -2,6 +2,7 @@
 pub mod core;
 pub mod physics;
 pub mod render;
+pub mod math;
 
 // Testing modules
 // SDL2 crate
