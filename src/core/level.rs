@@ -1,19 +1,18 @@
 use super::world;
-use super::camera;
 use super::gameobject;
 
-struct Level<'b,'a>
-{
+pub struct Level {
     world : world::World,
-    main_camera : camera::Camera<'a, 'b>,
     game_objects : Vec<gameobject::GameObject>,
 }
 
-impl Level<'_, '_> {
+impl Level {
 
-    //level data parsed from .meLevel file
-    pub fn load_level()
-    {
+    pub fn load_level() {
+
+    }
+
+    pub fn render(&mut self) {
 
     }
 }

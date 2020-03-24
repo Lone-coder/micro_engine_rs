@@ -1,5 +1,4 @@
 //all objects of u8 type are to be redefined
-use crate::core::Translate;
 use super::components::{physics, render, transform};
 
 pub struct GameObject {
@@ -16,13 +15,8 @@ impl GameObject {
             render: None,
         }
     }
-}
 
-impl Translate for GameObject{
+    pub fn render() {
 
-fn translate(&mut self, val: (i32, i32)) {
-
-
- }
- 
+    }
 }
