@@ -1,3 +1,3 @@
 pub mod transform;
-pub mod render;
+pub mod sprite;
 pub mod physics;
