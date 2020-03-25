@@ -35,10 +35,7 @@ impl Vector2 {
         a.x*b.x + a.y*b.y
     }
 
-
 }
-
-
 
 impl Add for Vector2{
     fn add(self, other: Self) -> Self {

@@ -1,5 +1,7 @@
+use crate::math;
+
 pub struct Transform {
-    position : (f32, f32),
-    scale : f32,
-    rotation : f32
+    pub position : math::Vector2,
+    pub scale : f32,
+    pub rotation : f32
 }
