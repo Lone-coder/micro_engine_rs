@@ -7,6 +7,7 @@ use micro_engine_rs::core::{world,camera};
 use camera::Camera;
 use sdl2::rect::Rect;
 use sdl2::pixels::Color;
+use micro_engine_rs::core::{gameobject,components};
 
 
 use sdl2;
@@ -27,11 +28,35 @@ fn main()
 
 	let mut engine = micro_engine_rs::Engine::init_engine(800, 600, "Camera movement test");
 
+        //For testing animations
+        //temporary creation of a small renderer
+        let mut obj1=gameobject::GameObject::new();
+        obj1.render=Some(components::sprite::Sprite::new());
+        let mut walk_states:Vec<(i32,i32)>=Vec::new();
+        for m in 0..20{
+            walk_states.push((32*m,32))
+        }
+        let mut p=obj1.render.unwrap();
+
+        p.load_states("Walking".to_string(),walk_states);
+        p.set_change_interval(20);
+        p.change_state("Walking".to_string());
+
+
+
+
+
+
 
 
     // instance of engine running
 
 	while engine.is_running() {
+
+        println!("value : {:?}  state : {:?}, index:{:?}",p.get_frame_inc(),p.state,p.index );
+        p.state_map.iter().for_each(|(k, v)|{
+            println!("{:?} ,{:?}",k,v );
+        });
 
         let instant = std::time::Instant::now();
 

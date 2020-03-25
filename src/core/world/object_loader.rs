@@ -15,7 +15,7 @@ pub fn loader(f:String)-> Vec<(String,i32,i32)> {
     let mut p: String = String::new();
 
     File::open(f).unwrap()
-                                   .read_to_string(&mut p);
+            .read_to_string(&mut p);
 
     let v : serde_json::Value = serde_json::from_str(&p).unwrap();
 

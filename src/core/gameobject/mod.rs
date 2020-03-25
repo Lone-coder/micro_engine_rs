@@ -1,12 +1,12 @@
 //all objects of u8 type are to be redefined
 pub mod object_stack;
 use crate::core::Translate;
-use super::components::{physics, render, transform};
+use super::components::{physics, sprite, transform};
 
 pub struct GameObject {
     transform: Option<transform::Transform>,
     physics: Option<physics::Physics>,
-    render: Option<render::Render>,
+    pub render: Option<sprite::Sprite>,
 }
 
 impl GameObject {
