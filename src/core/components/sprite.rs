@@ -2,6 +2,8 @@
 use  std::collections::VecDeque;
 use std::collections::HashMap;
 
+
+
 //Rect for rects
 use sdl2::rect::Rect;
 
@@ -60,7 +62,9 @@ impl Sprite{
 
 
 
+    //SDL2 only !
     // get rect of current value
+    // Returns sdl2::rect::Rect
     fn get_rect(&mut self)->Rect{
         let val=self.get_coords_inc();
         Rect::new(val.0,val.1,self.width as u32,self.height as u32)
@@ -98,7 +102,10 @@ impl Sprite{
 
 
 
+
+    //SDL2 only
     // returns  the animation frames it has to go through
+    // Returns an sdl2::rect::Rect
     // in the current state
     // gets the current frame and increments
     pub fn get_frame_inc(&mut self)->Rect{
@@ -113,6 +120,22 @@ impl Sprite{
         }
 
     }
+
+
+    //Non SDL function
+    // General , will return a tuple (a,b)
+    // containig coordinates of the next frames
+    pub fn get_next_frame(&mut self)->(i32,i32){
+        let val=self.state_map[&self.state.to_owned()];
+        if self.index>val.1||self.index<val.0{
+            self.index=val.0;
+            self.get_coords_inc()
+        }else{
+            self.get_coords_inc()
+        }
+
+    }
+
 
     pub fn set_change_interval(&mut self, val:i32){
         self.change_time=val

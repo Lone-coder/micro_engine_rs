@@ -23,10 +23,10 @@ fn main()
 	let mut engine = micro_engine_rs::Engine::init_engine(800, 600, "Camera movement test");
 
     //temporary creation of a small renderer
-    let obj1=GameObject::new();
-    obj1.render=Some(components::Sprite::new())
+//    let obj1=GameObject::new();
+//    obj1.render=Some(components::Sprite::new())
 
-    let walk_states=
+//    let walk_states=
 
 
 

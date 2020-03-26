@@ -152,6 +152,7 @@ impl<'a,'b> Camera<'a,'b>{
     }
 
 
+    //SDL2 only !!!
     pub fn render_scene_objects(&mut self, canvas : &mut sdl2::render::Canvas<sdl2::video::Window>) {
         self.get_objs_in_scene().iter().for_each( |vec_obj| {
             //rendering filled rects in place of static gameobjects
