@@ -1,5 +1,6 @@
 use std::ops::Add;
 use core::cmp::Ordering::Equal;
+
 #[derive(Debug,Copy,Clone)]
 pub struct  Vector2 {
     pub x : f32,
@@ -35,10 +36,7 @@ impl Vector2 {
         a.x*b.x + a.y*b.y
     }
 
-
 }
-
-
 
 impl Add for Vector2{
     fn add(self, other: Self) -> Self {

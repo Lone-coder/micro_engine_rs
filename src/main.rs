@@ -13,6 +13,7 @@ fn main()
 		//used to calculate delta time
         let instant = std::time::Instant::now();
 
+		let keys = engine.input_handle();
 		//put game update code here
 
 		engine.canvas.set_draw_color(sdl2::pixels::Color::RGB(0, 0, 0));
