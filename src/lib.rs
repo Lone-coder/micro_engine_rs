@@ -8,10 +8,12 @@ pub mod math;
 // SDL2 crate
 extern crate sdl2;
 pub use sdl2::video::Window;
+pub use sdl2::video::WindowContext;
 pub use sdl2::event::Event;
 pub use sdl2::pixels::Color;
 pub use sdl2::keyboard::Keycode;
 pub use sdl2::rect::Rect;
+use sdl2::render::TextureCreator;
 
 // Serde for creating an object loader
 extern crate serde_json;
@@ -24,6 +26,7 @@ pub use std::time::{Duration, Instant};
 pub struct Engine{
     pub canvas : sdl2::render::Canvas<Window>,
     pub event_pump : sdl2::EventPump,
+    pub texture_creator : TextureCreator<WindowContext>,
     running : bool,
     delta_time : f32,
 }
@@ -53,6 +56,7 @@ impl Engine{
         Engine{
             canvas : _canvas,
             event_pump : _event_pump,
+            texture_creator : _texture_creator,
             running : true,
             delta_time : 0.005,
         }
