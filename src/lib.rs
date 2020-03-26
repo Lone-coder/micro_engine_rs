@@ -26,7 +26,6 @@ pub use std::time::{Duration, Instant};
 pub struct Engine{
     pub canvas : sdl2::render::Canvas<Window>,
     pub event_pump : sdl2::EventPump,
-    pub texture_creator : TextureCreator<WindowContext>,
     running : bool,
     delta_time : f32,
 }
@@ -45,8 +44,6 @@ impl Engine{
         let mut _canvas = window.into_canvas()
     	.accelerated().build().map_err(|e| e.to_string()).unwrap();
 
-        let _texture_creator = _canvas.texture_creator();
-
         _canvas.set_draw_color(sdl2::pixels::Color::RGBA(0,0,0,255));
 
         let _timer = sdl_context.timer().unwrap();
@@ -56,7 +53,6 @@ impl Engine{
         Engine{
             canvas : _canvas,
             event_pump : _event_pump,
-            texture_creator : _texture_creator,
             running : true,
             delta_time : 0.005,
         }
