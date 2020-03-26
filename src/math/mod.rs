@@ -1,5 +1,6 @@
 use std::ops::Add;
 use core::cmp::Ordering::Equal;
+
 #[derive(Debug,Copy,Clone)]
 pub struct  Vector2 {
     pub x : f32,

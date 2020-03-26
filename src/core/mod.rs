@@ -6,6 +6,7 @@ pub mod window;
 pub mod world;
 pub mod input;
 pub mod camera;
+pub mod asset_loader;
 
 
 // Trait for moving objects
