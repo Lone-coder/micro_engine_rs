@@ -7,6 +7,7 @@ pub mod math;
 // Testing modules
 // SDL2 crate
 extern crate sdl2;
+use crate::sdl2::image::LoadTexture;
 pub use sdl2::video::Window;
 pub use sdl2::video::WindowContext;
 pub use sdl2::event::Event;
@@ -21,16 +22,20 @@ extern crate serde_json;
 //some std imports
 pub use std::collections::{HashMap,HashSet};
 pub use std::time::{Duration, Instant};
+pub use std::path::Path;
 
 //engine data struct (likely to change)
-pub struct Engine{
+pub struct Engine<'a>{
     pub canvas : sdl2::render::Canvas<Window>,
     pub event_pump : sdl2::EventPump,
+    pub textures : Vec<sdl2::render::Texture<'a>>,
+    pub texture_creator : TextureCreator<WindowContext>,
     running : bool,
     delta_time : f32,
+
 }
 
-impl Engine{
+impl <'a> Engine <'a>{
 
     pub fn init_engine(screen_width : u32, screen_height : u32, window_title : &str) -> Engine
     {
@@ -46,6 +51,8 @@ impl Engine{
 
         _canvas.set_draw_color(sdl2::pixels::Color::RGBA(0,0,0,255));
 
+        let texture_creator = _canvas.texture_creator();
+
         let _timer = sdl_context.timer().unwrap();
 
         let _event_pump = sdl_context.event_pump().unwrap();
@@ -55,8 +62,9 @@ impl Engine{
             event_pump : _event_pump,
             running : true,
             delta_time : 0.005,
+            textures : Vec::new(),
+            texture_creator : texture_creator,
         }
-
     }
 
 
@@ -101,6 +109,13 @@ impl Engine{
                         .filter_map(Keycode::from_scancode).collect();
 
         key_presses
+    }
+
+    pub fn load_texture(&mut self, file_name : &str){
+        let path = Path::new(file_name);
+
+        //self.textures.push(self.texture_creator.load_texture(path).unwrap());
+
     }
 
 

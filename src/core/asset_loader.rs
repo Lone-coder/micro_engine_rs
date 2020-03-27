@@ -13,23 +13,23 @@ use std::path::Path;
 
 pub struct AssetLoader<'a> {
     pub textures : Vec<Texture<'a>>,
-    pub texture_creator : TextureCreator<WindowContext>,
+    //pub texture_creator : &'a mut TextureCreator<WindowContext>,
 }
 
 impl <'a> AssetLoader<'a> {
 
-    pub fn new(tex_creator : TextureCreator<WindowContext>) -> AssetLoader<'a>{
+    pub fn new(tex_creator : &'a mut TextureCreator<WindowContext>) -> AssetLoader<'a>{
         AssetLoader {
             textures : Vec::new(),
-            texture_creator : tex_creator,
+            //texture_creator : tex_creator,
         }
     }
 
     pub fn load_texture(&mut self, file_name : &str) -> usize {
         let path = Path::new(file_name);
 
-        let texture : Texture<'a> = self.texture_creator.load_texture(path).unwrap();
-        self.textures.push(texture);
+        //let texture : Texture<'a> = self.texture_creator.load_texture(path).unwrap();
+        //self.textures.push(texture);
 
         self.textures.len() - 1
 
