@@ -1,5 +1,8 @@
 // Testing modules
 // SDL2 crate
+// This set of implementations is only for SDL2.
+// For using other libraries , the implementation details will change
+
 extern crate sdl2;
 use sdl2::render::Texture;
 pub use sdl2::video::Window;
@@ -21,7 +24,7 @@ pub struct Engine<'a>{
     pub canvas :sdl2::render::Canvas<Window>,
     pub texture_creator:Option<&'a TextureCreator<sdl2::video::WindowContext>>,
     pub event_pump : sdl2::EventPump,
-    running : bool,
+    pub running : bool,
     delta_time : f32,
     pub texture_list:Vec<Texture<'a>>
 }
@@ -48,6 +51,18 @@ impl <'a>Engine<'a>{
     }
 
 
+    pub fn clear(&mut self){
+        self.canvas.clear()
+    }
+
+    pub fn render(&mut self,m:usize,source:sdl2::rect::Rect,dest:sdl2::rect::Rect){
+        self.canvas.copy(&self.texture_list[m],source,dest);
+    }
+
+
+
+
+
     pub fn is_running(& self) -> bool {
         self.running
     }
@@ -60,7 +75,7 @@ impl <'a>Engine<'a>{
 
     pub fn update(&mut self, instant : std::time::Instant) {
 
-        //uncomment below statement to cap FPS at 60
+        // uncomment below statement to cap FPS at 60
 	    std::thread::sleep(std::time::Duration::from_millis(16)); //waiting for 60fps 1 /60 = 0.016 secs
 
 		self.delta_time = instant.elapsed().as_secs_f32();

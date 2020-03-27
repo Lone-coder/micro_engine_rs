@@ -25,4 +25,28 @@ fn main()
 
         engine.update(instant);
     }
+
+
+
+	let oreo="frar".to_string();
+
+	match oreo.as_str(){
+		"walking_up" =>{
+			//val.physics.y-=20;
+		}
+
+		"walking_right" =>{
+			//val.physics.x+=20;
+		}
+
+		"walking_left"=>{
+			//val.physics.x-=20
+		}
+
+		"walking_down"=>{
+		//val.physics.y+=20
+	}
+	_=>()
+
+	}
 }

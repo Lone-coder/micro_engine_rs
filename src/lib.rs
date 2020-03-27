@@ -6,6 +6,11 @@ pub mod math;
 pub mod test_engine;
 
 // Testing modules
+pub mod test_object;
+
+
+
+
 // SDL2 crate
 extern crate sdl2;
 pub use sdl2::video::Window;
