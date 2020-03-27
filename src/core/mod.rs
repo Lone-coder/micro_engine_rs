@@ -7,7 +7,7 @@ pub mod world;
 pub mod input;
 pub mod camera;
 pub mod asset_loader;
-
+pub mod behaviour;
 
 // Trait for moving objects
 pub trait Translate {
