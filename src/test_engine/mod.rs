@@ -1,13 +1,7 @@
-//Micro Engine core modules
-pub mod core;
-pub mod physics;
-pub mod render;
-pub mod math;
-pub mod test_engine;
-
 // Testing modules
 // SDL2 crate
 extern crate sdl2;
+use sdl2::render::Texture;
 pub use sdl2::video::Window;
 pub use sdl2::video::WindowContext;
 pub use sdl2::event::Event;
@@ -15,49 +9,42 @@ pub use sdl2::pixels::Color;
 pub use sdl2::keyboard::Keycode;
 pub use sdl2::rect::Rect;
 use sdl2::render::TextureCreator;
+use sdl2::image::LoadTexture;
 
-// Serde for creating an object loader
-extern crate serde_json;
 
 //some std imports
 pub use std::collections::{HashMap,HashSet};
 pub use std::time::{Duration, Instant};
 
 //engine data struct (likely to change)
-pub struct Engine{
-    pub canvas : sdl2::render::Canvas<Window>,
+pub struct Engine<'a>{
+    pub canvas :sdl2::render::Canvas<Window>,
+    pub texture_creator:Option<&'a TextureCreator<sdl2::video::WindowContext>>,
     pub event_pump : sdl2::EventPump,
     running : bool,
     delta_time : f32,
+    pub texture_list:Vec<Texture<'a>>
 }
 
-impl Engine{
+impl <'a>Engine<'a>{
 
-    pub fn init_engine(screen_width : u32, screen_height : u32, window_title : &str) -> Engine
-    {
-        let sdl_context = sdl2::init().unwrap();
 
-    	let video_subsystem = sdl_context.video().unwrap();
-
-    	let window = video_subsystem.window(window_title, screen_width, screen_height)
-    	.position_centered().build().map_err(|e| e.to_string()).unwrap();
-
-        let mut _canvas = window.into_canvas()
-    	.accelerated().build().map_err(|e| e.to_string()).unwrap();
-
-        _canvas.set_draw_color(sdl2::pixels::Color::RGBA(0,0,0,255));
-
-        let _timer = sdl_context.timer().unwrap();
-
-        let _event_pump = sdl_context.event_pump().unwrap();
+    pub fn load_engine(canvas:sdl2::render::Canvas<sdl2::video::Window>,
+                    texture_creator:&'a TextureCreator<sdl2::video::WindowContext>,pump:sdl2::EventPump)->Engine<'a>{
 
         Engine{
-            canvas : _canvas,
-            event_pump : _event_pump,
-            running : true,
-            delta_time : 0.005,
+            canvas:canvas,
+            texture_creator:Some(&texture_creator),
+            event_pump:pump,
+            running:false,
+            delta_time:3.0,
+            texture_list:Vec::new()
         }
 
+    }
+
+    pub fn load_textures(&mut self,p:&str){
+        self.texture_list.push(self.texture_creator.unwrap().load_texture(std::path::Path::new(p)).unwrap());
     }
 
 
