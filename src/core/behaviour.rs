@@ -19,7 +19,6 @@ impl  Entity {
 
     pub fn behave(&mut self, behaviuor_name : String)
     {
-        let b = self.behaviours.get(&behaviuor_name).unwrap();
-        b(self);
+        (self.behaviours.get(&behaviuor_name).unwrap())(self);
     }
 }
