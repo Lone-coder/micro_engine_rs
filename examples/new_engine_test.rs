@@ -20,8 +20,19 @@ pub fn run(png: &Path) -> Result<(), String> {
     let texture_creator = canvas.texture_creator();
 
     let mut engine=test_engine::Engine::load_engine(canvas,&texture_creator,sdl_context.event_pump().unwrap());
+
+
     engine.load_textures("assets/npc.png");
-    engine.canvas.copy(&engine.texture_list[0],None,None);
+    engine.load_textures("assets/hero.png");
+    engine.load_textures("assets/grass-tile-2.png");
+
+    engine.texture_list.iter().for_each(|x|{
+        self.canvas.copy(x,None,None);
+        std::thread::sleep_ms(500);
+        self.canvas.clear()
+    });
+
+
     engine.canvas.present();
 
 
