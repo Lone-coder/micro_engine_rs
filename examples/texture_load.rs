@@ -8,7 +8,7 @@ fn main()
 	let mut cam = camera::Camera::create(800, 600, None);
 
 	let mut engine = micro_engine_rs::Engine::init_engine(800, 600, "Camera movement test");
-    
+
 
 	while engine.is_running() {
 		//used to calculate delta time
