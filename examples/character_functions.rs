@@ -1,5 +1,9 @@
 use micro_engine_rs::test_object::Entity;
 
+fn main(){
+
+}
+
 pub fn init(val:&mut Entity){
     let vals_up=vec![(16,0),(16,16),(16,32)];
     let vals_down=vec![(32,0),(32,16),(32,32)];
