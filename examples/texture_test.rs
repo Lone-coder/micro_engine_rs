@@ -19,6 +19,7 @@ pub fn run(png: &Path) -> Result<(), String> {
     let texture_creator = canvas.texture_creator();
     let texture = texture_creator.load_texture(png)?;
 
+
     canvas.copy(&texture, None, None)?;
     canvas.present();
 

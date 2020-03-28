@@ -107,6 +107,7 @@ impl<'a,'b> Camera<'a,'b>{
 
     */
 
+
     pub fn get_objs_in_scene(&mut self) -> Vec<(&super::gameobject::GameObject,i32,i32)> {
 
         let mut proximity_blocks:Vec<(&super::gameobject::GameObject,i32,i32)> = Vec::new();
