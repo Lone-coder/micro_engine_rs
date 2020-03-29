@@ -94,3 +94,13 @@ pub fn circle(val:&mut Entity){
 
 
 }
+
+
+pub fn follow(ent:&mut Entity,mut other:Vec<&mut Entity>){
+    ent.physics.x=other[0].physics.x-3;
+    ent.physics.y=other[0].physics.y+3;
+
+    other[0].physics.x=400;
+    other[0].physics.y=800;
+
+}

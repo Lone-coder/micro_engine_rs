@@ -22,11 +22,31 @@ pub fn run(png: &Path) -> Result<(), String> {
 
     let mut canvas = window.into_canvas().software().build().map_err(|e| e.to_string())?;
     let texture_creator = canvas.texture_creator();
+    //-----------------------------------------------------------------------------------
+    //========================================================================================
+
+
+    //Create the engine
     let mut engine=test_engine::Engine::load_engine(canvas,&texture_creator,sdl_context.event_pump().unwrap());
     //------------------------------------------------------------------------------------------------
     //===============================================================================================
-    engine.load_textures("assets/hero.png");
 
+
+    // load the textures
+    engine.load_textures("assets/hero.png");
+    let mut game=micro_engine_rs::game::Game::new();
+    game.entities=vec![
+            micro_engine_rs::test_object::Entity::new("Soldier".to_string()),
+            micro_engine_rs::test_object::Entity::new("Enemy".to_string()),
+            micro_engine_rs::test_object::Entity::new("Enemy".to_string()),
+            micro_engine_rs::test_object::Entity::new("Enemy".to_string()),
+            micro_engine_rs::test_object::Entity::new("JavidsDumbBrain".to_string()),
+    ];
+
+    for m in &mut game.entities{
+        m.load_interactive(character_functions::follow);
+        m.load(character_functions::circle)
+    }
 
     let mut ent=micro_engine_rs::test_object::Entity::new("Soldier".to_string());
     ent.load_many(vec![character_functions::init,
@@ -37,12 +57,44 @@ pub fn run(png: &Path) -> Result<(), String> {
                        character_functions::circle
                    ]);
     ent.exec_one(0);
-    ent.exec_one(5);
+    //game_loop
+    for mut m in game.entities{
+        m.inter_exec(&mut ent);
+    }
 
+
+
+
+
+
+
+
+
+    //load the level
+
+    //adjust the game states
+
+
+
+
+
+
+
+
+    //create the event loop and the logic
+
+    println!("physics is x:  {:?}  y: {:?}",ent.physics.x,ent.physics.y);
+    ent.exec_one(0);
     println!("animation is{:?}",ent.animation.sprite_coords);
     println!("physics is x:  {:?}  y: {:?}",ent.physics.x,ent.physics.y);
     println!("animation is{:?}",ent.animation.state);
-    engine.running=true;
+
+
+
+
+
+    engine.running=false;
+
 
     while engine.is_running(){
         engine.input_handle();
@@ -51,6 +103,8 @@ pub fn run(png: &Path) -> Result<(), String> {
         engine.canvas.present();
         ent.exec_one(5);
         std::thread::sleep_ms(100);
+
+
     }
 
 
