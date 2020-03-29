@@ -33,12 +33,9 @@ pub fn run() -> Result<(), String> {
     // });
 
     engine.canvas.clear();
-
     for x in engine.texture_list{
         engine.canvas.copy(&x, None, None);
     }
-
-
     engine.canvas.present();
 
 
