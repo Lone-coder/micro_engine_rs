@@ -1,11 +1,16 @@
 use crate::core::components;
 
+//#[derive(Clone)]
 pub struct Entity{
     pub name:String,
     pub state:String,
     pub physics:super::core::components::physics::Physics,
     pub animation:components::sprite::Sprite,
+    //behaviour that entity does that depends/ affects only it
     pub behaviour:Vec<fn(&mut Entity)>,
+
+    //behaviour that entity does that affects it and other objects
+    pub interactive_behaviour:Vec<fn(&mut Entity,Vec<&mut Entity>)>
 
 }
 
@@ -21,7 +26,8 @@ impl Entity{
             animation:components::sprite::Sprite::new(),
 
             //change to hashmap
-            behaviour:Vec::new()
+            behaviour:Vec::new(),
+            interactive_behaviour:Vec::new()
         }
     }
 
@@ -53,5 +59,17 @@ impl Entity{
         self.animation.change_state(state.to_owned());
         self.state=state;
     }
+
+
+    pub fn load_interactive(&mut self,f:fn(&mut Entity,Vec<&mut Entity>)){
+        self.interactive_behaviour.push(f)
+    }
+
+
+    //This is to execute instructions based on things in the outside world
+    pub fn inter_exec(&mut self,val:&mut Entity){
+        self.interactive_behaviour[0](self,vec![val])
+    }
+
 
 }

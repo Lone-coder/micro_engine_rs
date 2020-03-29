@@ -7,6 +7,7 @@ pub mod test_engine;
 
 // Testing modules
 pub mod test_object;
+pub mod game;
 
 
 
