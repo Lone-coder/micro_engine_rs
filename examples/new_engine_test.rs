@@ -7,7 +7,7 @@ use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
 use micro_engine_rs::test_engine;
 
-pub fn run(png: &Path) -> Result<(), String> {
+pub fn run() -> Result<(), String> {
     let sdl_context = sdl2::init()?;
     let video_subsystem = sdl_context.video()?;
     let _image_context = sdl2::image::init(InitFlag::PNG | InitFlag::JPG)?;
@@ -26,11 +26,17 @@ pub fn run(png: &Path) -> Result<(), String> {
     engine.load_textures("assets/hero.png");
     engine.load_textures("assets/grass-tile-2.png");
 
-    engine.texture_list.iter().for_each(|x|{
-        self.canvas.copy(x,None,None);
-        std::thread::sleep_ms(500);
-        self.canvas.clear()
-    });
+    // engine.texture_list.iter().for_each(|x|{
+    //     engine.canvas.copy(x,None,None);
+    //     std::thread::sleep_ms(500);
+    //     engine.canvas.clear();
+    // });
+
+    engine.canvas.clear();
+
+    for x in engine.texture_list{
+        engine.canvas.copy(&x, None, None);
+    }
 
 
     engine.canvas.present();
@@ -56,7 +62,7 @@ fn main() -> Result<(), String> {
 
     let args: Vec<_> = env::args().collect();
 
-    run(Path::new("assets/hero.png"))?;
+    run()?;
 
     Ok(())
 }

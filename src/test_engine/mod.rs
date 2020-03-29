@@ -46,7 +46,7 @@ impl <'a>Engine<'a>{
 
     }
 
-    pub fn load_textures(&mut self,p:&str){
+    pub fn load_textures(&mut self, p:&str){
         self.texture_list.push(self.texture_creator.unwrap().load_texture(std::path::Path::new(p)).unwrap());
     }
 
