@@ -35,7 +35,7 @@ pub fn run(png: &Path) -> Result<(), String> {
     // load the textures
     engine.load_textures("assets/hero.png");
     let mut game=micro_engine_rs::game::Game::new();
-    
+
     game.entities=vec![
             micro_engine_rs::test_object::Entity::new("Soldier".to_string()),
             micro_engine_rs::test_object::Entity::new("Enemy".to_string()),
