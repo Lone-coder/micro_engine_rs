@@ -1,11 +1,10 @@
 use crate::core::components;
-
 //#[derive(Clone)]
 pub struct Entity{
     pub name:String,
     pub state:String,
-    pub physics:super::core::components::physics::Physics,
-    pub animation:components::sprite::Sprite,
+    pub physics:crate::core::components::physics::Physics,
+    pub animation:crate::core::components::sprite::Sprite,
     //behaviour that entity does that depends/ affects only it
     pub behaviour:Vec<fn(&mut Entity)>,
 

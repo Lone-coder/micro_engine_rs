@@ -27,9 +27,7 @@ pub fn run(png: &Path) -> Result<(), String> {
     engine.load_textures("assets/grass-tile-2.png");
 
     engine.texture_list.iter().for_each(|x|{
-        self.canvas.copy(x,None,None);
-        std::thread::sleep_ms(500);
-        self.canvas.clear()
+        
     });
 
 

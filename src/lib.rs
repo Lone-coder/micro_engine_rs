@@ -6,9 +6,9 @@ pub mod math;
 pub mod test_engine;
 
 // Testing modules
-pub mod test_object;
+pub mod entity;
 pub mod game;
-
+pub mod world;
 
 
 

@@ -1,4 +1,4 @@
-use crate::test_object::Entity;
+use crate::entity::dynamicEntity::Entity;
 use crate::math::Vector2;
 use std::collections::HashMap;
 

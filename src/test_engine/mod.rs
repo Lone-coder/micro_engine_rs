@@ -26,7 +26,8 @@ pub struct Engine<'a>{
     pub event_pump : sdl2::EventPump,
     pub running : bool,
     delta_time : f32,
-    pub texture_list:Vec<Texture<'a>>
+    pub texture_list:Vec<Texture<'a>>,
+    pub game:crate::game::Game,
 }
 
 impl <'a>Engine<'a>{
@@ -41,13 +42,16 @@ impl <'a>Engine<'a>{
             event_pump:pump,
             running:false,
             delta_time:3.0,
-            texture_list:Vec::new()
+            texture_list:Vec::new(),
+            game:crate::game::Game::new()
         }
 
     }
 
     pub fn load_textures(&mut self,p:&str){
-        self.texture_list.push(self.texture_creator.unwrap().load_texture(std::path::Path::new(p)).unwrap());
+        self.texture_list.push(self.texture_creator
+            .unwrap()
+            .load_texture(std::path::Path::new(p)).unwrap());
     }
 
 
@@ -59,8 +63,11 @@ impl <'a>Engine<'a>{
         self.canvas.copy(&self.texture_list[m],source,dest);
     }
 
-
-
+    pub fn update_game(&mut self,index:usize){
+        for m in &self.game.entities{
+            m.borrow_mut().execute()
+        }
+    }
 
 
     pub fn is_running(& self) -> bool {
