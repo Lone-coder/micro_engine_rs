@@ -26,12 +26,7 @@ pub fn run(png: &Path) -> Result<(), String> {
     //------------------------------------------------------------------------------------------------
     //===============================================================================================
 
-
-
-
-
-
-    // load the textures 
+    // load the textures
 
     let game=micro_engine_rs::game::Game::new();
     engine.load_textures("assets/hero.png");

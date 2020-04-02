@@ -1,4 +1,4 @@
-use std::ops::Add;
+use std::ops::{Add, Sub};
 use core::cmp::Ordering::Equal;
 
 #[derive(Debug,Copy,Clone)]
@@ -13,6 +13,10 @@ impl Vector2 {
             x : _x,
             y : _y,
         }
+    }
+
+    pub fn scale(&self, scalar : f32) -> Vector2 {
+        Vector2{ x : self.x * scalar, y : self.y * scalar}
     }
 
     pub fn dot(&self,other:&Vector2 )->f32{
@@ -38,17 +42,27 @@ impl Vector2 {
 
 }
 
-impl Add for Vector2{
+impl Add for Vector2 {
+
+    type Output = Vector2;
+
     fn add(self, other: Self) -> Self {
-
-    Self{
-        x:self.x+other.x,
-        y:self.y+other.y
+        Self{
+            x:self.x+other.x,
+            y:self.y+other.y
+        }
     }
-
 }
 
-type Output = Self;
+impl Sub for Vector2 {
+    type Output = Vector2;
+
+    fn sub(self, other: Vector2) -> Vector2 {
+        Vector2 {
+            x : self.x - other.x,
+            y : self.y - other.y
+        }
+    }
 }
 
 
