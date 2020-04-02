@@ -1,6 +1,8 @@
 use crate::core::components;
 //#[derive(Clone)]
 pub struct Entity{
+    pub x:usize,
+    pub y:usize,
     pub name:String,
     pub state:String,
     pub physics:crate::core::components::physics::Physics,
@@ -16,6 +18,8 @@ pub struct Entity{
 impl Entity{
     pub fn new(name:String)->Entity{
         Entity{
+            x:0,
+            y:0,
             name:name,
             state:"".to_owned(),
             physics:components::physics::Physics{
