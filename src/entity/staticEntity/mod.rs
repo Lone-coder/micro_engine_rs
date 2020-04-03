@@ -1,25 +1,30 @@
-use crate::core::components::physics::Physics;
+use crate::physics::collision_rect::CollisionRect;
 
 pub struct StaticEntity{
-    components:Physics,
-    coordinates:(usize,usize)
+    collision_rect:CollisionRect,
+    state:usize,
+
+
 }
 impl StaticEntity{
-
     // for testing
-    pub fn new(x:usize,y:usize)->StaticEntity{
+    pub fn new(x:usize,y:usize,width:usize,height:usize)->StaticEntity{
         StaticEntity{
-            components:Physics{
-                x:x as i32,y:y as i32
-             },
-            coordinates:(100,100)
+            collision_rect:CollisionRect::new(x as f32, y as f32,width  as f32,height as f32),
+            state:0
         }
     }
 
     pub fn get_x(&self)->usize {
-        self.coordinates.0
+        self.collision_rect.x as usize
     }
     pub fn get_y(&self)->usize{
-        self.coordinates.1
+        self.collision_rect.y as usize
+    }
+    pub fn get_components(&self)->CollisionRect{
+        self.collision_rect
+    }
+    pub fn set_state(&mut self,state:usize){
+        self.state=state
     }
 }
