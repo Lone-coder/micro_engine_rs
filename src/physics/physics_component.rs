@@ -46,6 +46,10 @@ impl PhysicsComponent {
         detect_collison(&self.collision_rect, &other.collision_rect)
     }
 
+    pub fn check_collision2(&self, other : &Self) -> bool {
+        self.collision_rect.is_colliding_with(&other.collision_rect)
+    }
+
     pub fn update(&mut self, dt : f32) {
         //updating position of collision rect
         self.collision_rect.x = self.position.x;

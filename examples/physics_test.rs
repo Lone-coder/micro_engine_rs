@@ -1,24 +1,14 @@
 // test for physics system
 use micro_engine_rs;
 use micro_engine_rs::test_engine;
-use micro_engine_rs::physics::{collision_rect::CollisionRect,physics_component::PhysicsComponent};
+use micro_engine_rs::physics::physics_component::PhysicsComponent;
 use micro_engine_rs::physics::PhysicsWorld;
 use micro_engine_rs::math::Vector2;
 
-use sdl2::render::Canvas;
-use sdl2::video::Window;
-
-use std::env;
-use std::path::Path;
-
-use sdl2::image::{LoadTexture, InitFlag};
-use sdl2::rect::Rect;
-use sdl2::event::Event;
-use sdl2::keyboard::Keycode;
+use sdl2::image::InitFlag;
 use sdl2::pixels::Color;
 
 fn main() {
-
     //All SDL intialization
     let sdl_context = sdl2::init().unwrap();
     let video_subsystem = sdl_context.video().unwrap();
@@ -27,29 +17,26 @@ fn main() {
       .position_centered()
       .build()
       .map_err(|e| e.to_string()).unwrap();
-
-    let mut canvas = window.into_canvas().software().build().map_err(|e| e.to_string()).unwrap();
+    let canvas = window.into_canvas().software().build().map_err(|e| e.to_string()).unwrap();
     let texture_creator = canvas.texture_creator();
 
     //Create an engine instance
     let mut engine = test_engine::Engine::load_engine(canvas,&texture_creator,sdl_context.event_pump().unwrap());
-
     engine.running = true;
 
     let mut delta_time = 0.016;
 
-
     //Initializing physics components
     let mut A = PhysicsComponent::new(Vector2::new(150.0, 300.0), 1.0, 40.0, 40.0);
-    let mut B = PhysicsComponent::new(Vector2::new(500.0, 300.0), 1.0 , 40.0, 40.0);
+    let mut B = PhysicsComponent::new(Vector2::new(500.0, 300.0), 0.0 , 40.0, 40.0);
     let mut floor = PhysicsComponent::new(Vector2::new(400.0, 500.0), 0.0, 800.0, 20.0);
     A.affected_by_gravity = false;
     B.affected_by_gravity = false;
     floor.affected_by_gravity = false;
 
-    A.restitution_coeff = 0.005;
-    B.restitution_coeff = 0.0025;
-    floor.restitution_coeff = 0.05;
+    A.restitution_coeff = 0.0;
+    B.restitution_coeff = 0.0;
+    floor.restitution_coeff = 0.0;
 
     A.velocity = Vector2::new(100.0, 0.0);
     let mut phy_world = PhysicsWorld::create_physics_world(Vector2::new(0.0, 40.0));

@@ -20,12 +20,12 @@ impl Vector2 {
     }
 
     pub fn dot(&self,other:&Vector2 )->f32{
-        self.x*other.x+self.y*other.y
+        (self.x * other.x) + (self.y * other.y)
     }
 
     //cross product in the k direction
     pub fn cross_self(&self,other:&Vector2)->f32{
-        self.x*other.y-self.y*other.x
+        self.x*other.y - self.y*other.x
     }
 
     pub fn modulus (&self)->f32{
@@ -35,11 +35,6 @@ impl Vector2 {
     pub fn find_angle_rel(&self,other:&Self)->f32{
         (self.dot(other)/(self.modulus()*other.modulus())).acos()
     }
-
-    pub fn dot_2(a:&Self,b:&Self)->f32{
-        a.x*b.x + a.y*b.y
-    }
-
 }
 
 impl Add for Vector2 {
