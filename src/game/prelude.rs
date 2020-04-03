@@ -12,5 +12,13 @@ pub enum SendValue{
     },
     EntityLoad{
         val:Box<SendValue>
+    },
+    ChangeParams{
+        index:usize,
+        param:usize
+    },
+    Destroy{
+        index:usize
     }
+
 }

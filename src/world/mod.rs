@@ -5,7 +5,7 @@
 //temporarily testing stuff
 use crate::entity::staticEntity;
 use crate::entity::dynamicEntity;
-
+use crate::physics::collision_rect;
 
 pub struct World{
     layout:Vec<Vec<Vec<staticEntity::StaticEntity>>>,
@@ -34,6 +34,8 @@ impl World{
         }
 
 
+    //================================WARNING!!==================================================
+    // =======================NEVER EVER EVER USE THIS !!!======================================
     // todo
     // Game specific things
     // The following function is probably gonna be used for procedurally generated games
@@ -45,6 +47,7 @@ impl World{
             (0..x_blocks.unwrap_or(0usize)).for_each(|_|{ self.layout[y].push(Vec::new())})
         })
     }
+    //==========================================================================================
 
 
     // Loads Entities into the world
@@ -62,46 +65,64 @@ impl World{
 
     // Todo
     // Create a collisions component struct to check for collisions
-    fn get_objs_in_blk(&self,x:usize,y:usize)->Vec<crate::core::components::physics::Physics>{
-        let out=Vec::new();
-        if x<0||y<0||x>self.block_width*self.layout[0].len()||
-            y>self.block_height*self.layout.len(){
+    // This is probably inefficient as it copies the values during each
+    // execution cycle
+    // probably have to change to i64
+    fn get_objs_in_blk(&self,x:i32,y:i32)->Vec<collision_rect::CollisionRect>{
+        let mut out=Vec::new();
+        if x<0||y<0||(x>(self.block_width*self.layout[0].len()) as i32)||
+            (y>(self.block_height*self.layout.len()) as i32){
             return out
         }
-        self.layout[y][x].iter().for_each(|x|{
-            unimplemented!()
+        self.layout[y as usize][x as usize].iter().for_each(|x|{
+            out.push(x.get_components())
         });
         out
     }
 
+
+    // Redundant code !!!
+    // change to incorporate messaging
     // get adjacent blocks
-    pub fn get_adj_indices(){
-        unimplemented!()
+    pub fn get_adj_indices(&self,ent:&dynamicEntity::Entity)->[(i32,i32);4]{
+        let v=self.get_block(ent.x,ent.y);
+        let out_x=v.0 as i32;
+        let out_y=v.1 as i32;
+        let bf_x=out_x  + ((self.block_width/2 - ent.x%self.block_width) as i32).signum()  ;
+        let bf_y=out_y  + ((self.block_height/2 - ent.y%self.block_height) as i32).signum() ;
+        [(out_x,out_y),(out_x,bf_y),(bf_x,out_y),(bf_x,bf_y)]
     }
 
 
     //  Gets objects adjacent to a dynamic entity
-    pub fn get_adj_objs(&self,_ent:&dynamicEntity::Entity){
+    pub fn get_adj_objs(&self,_ent:&dynamicEntity::Entity)->Vec<Vec<collision_rect::CollisionRect>>{
         let x=_ent.x;
         let y=_ent.y;
         // Have to change this to return fewer parameters
-        let mut out:Vec<Vec<crate::core::components::physics::Physics>>=Vec::new();
+        let mut out:Vec<Vec<collision_rect::CollisionRect>>=Vec::new();
         let v=self.get_block(x,y);
+        let out_x=v.0 as i32;
+        let out_y=v.1 as i32;
 
         //chek if positive or negative here
-        let bf_x=v.0 + ((self.block_width/2 - _ent.x%self.block_width) as i32).signum() as usize ;
-        let bf_y=v.1 + ((self.block_height/2 - _ent.y%self.block_height) as i32).signum() as usize ;
-                    out.push(self.get_objs_in_blk(v.0,v.1));
-                    out.push(self.get_objs_in_blk(v.0, bf_y));
-                    out.push(self.get_objs_in_blk(bf_x,v.1));
+        let bf_x=v.0 as i32  + ((self.block_width/2 - _ent.x%self.block_width) as i32).signum()  ;
+        let bf_y=v.1  as i32 + ((self.block_height/2 - _ent.y%self.block_height) as i32).signum() ;
+                    out.push(self.get_objs_in_blk(out_x,out_y));
+                    out.push(self.get_objs_in_blk(out_x, bf_y));
+                    out.push(self.get_objs_in_blk(bf_x,out_y));
                     out.push(self.get_objs_in_blk(bf_x,bf_y));
+            out
         }
+
+
+        pub fn change_state(&mut self,state:usize,x:usize,y:usize,obj:usize){
+            self.layout[y][x][obj].set_state(state)
+        }
+
 }
 
 
 #[test]
 fn create_world() {
-    let entity=staticEntity::StaticEntity::new(1500,1500);
-    let mut world=World::create_new(20,20);
-    world.loader(entity);
+
 }

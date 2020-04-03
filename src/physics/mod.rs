@@ -53,6 +53,10 @@ impl PhysicsComponent {
         self.position.y = self.position.y + (self.velocity.y * dt);
     }
 
+
+
+    // SDL2 only!!
+    // non-general, must die !!!
     //draws collision rect for visual debugging
     pub fn draw_phy_object(&mut self, canvas : &mut Canvas<Window>) {
 
@@ -64,6 +68,7 @@ impl PhysicsComponent {
         canvas.draw_rect(Rect::new(x, y, width, height)).unwrap();
     }
 }
+
 
 
 pub fn resolve_collisions(A : &mut PhysicsComponent, B : &mut PhysicsComponent, collision_normal : &Vector2) -> f32 {
