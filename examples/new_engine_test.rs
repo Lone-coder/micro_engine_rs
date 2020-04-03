@@ -26,11 +26,10 @@ pub fn run() -> Result<(), String> {
     engine.load_textures("assets/hero.png");
     engine.load_textures("assets/grass-tile-2.png");
 
-    // engine.texture_list.iter().for_each(|x|{
-    //     engine.canvas.copy(x,None,None);
-    //     std::thread::sleep_ms(500);
-    //     engine.canvas.clear();
-    // });
+    engine.texture_list.iter().for_each(|x|{
+
+    });
+
 
     engine.canvas.clear();
     for x in engine.texture_list{

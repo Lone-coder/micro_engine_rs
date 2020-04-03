@@ -1,4 +1,4 @@
-use micro_engine_rs::test_object::Entity;
+use micro_engine_rs::entity::dynamicEntity::Entity;
 
 fn main(){
 
