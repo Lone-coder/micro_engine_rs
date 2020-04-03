@@ -1,8 +1,8 @@
 // test for physics system
 use micro_engine_rs;
 use micro_engine_rs::test_engine;
-use micro_engine_rs::physics::{collision_rect::CollisionRect,PhysicsComponent};
-use micro_engine_rs::physics::resolve_collisions;
+use micro_engine_rs::physics::{collision_rect::CollisionRect,physics_component::PhysicsComponent};
+use micro_engine_rs::physics::PhysicsWorld;
 use micro_engine_rs::math::Vector2;
 
 use sdl2::render::Canvas;
@@ -19,7 +19,7 @@ use sdl2::pixels::Color;
 
 fn main() {
 
-    //All sdl intialization
+    //All SDL intialization
     let sdl_context = sdl2::init().unwrap();
     let video_subsystem = sdl_context.video().unwrap();
     let _image_context = sdl2::image::init(InitFlag::PNG | InitFlag::JPG).unwrap();
@@ -40,13 +40,36 @@ fn main() {
 
 
     //Initializing physics components
-    let mut A = PhysicsComponent::new(Vector2::new(40.0, 300.0), 5.0, 40.0, 40.0);
-    let mut B = PhysicsComponent::new(Vector2::new(500.0, 300.0), 0.0 , 40.0, 40.0);
+    let mut A = PhysicsComponent::new(Vector2::new(150.0, 300.0), 1.0, 40.0, 40.0);
+    let mut B = PhysicsComponent::new(Vector2::new(500.0, 300.0), 1.0 , 40.0, 40.0);
+    let mut floor = PhysicsComponent::new(Vector2::new(400.0, 500.0), 0.0, 800.0, 20.0);
+    A.affected_by_gravity = false;
+    B.affected_by_gravity = false;
+    floor.affected_by_gravity = false;
 
-    A.restitution_coeff = 0.0005;
+    A.restitution_coeff = 0.005;
     B.restitution_coeff = 0.0025;
+    floor.restitution_coeff = 0.05;
 
     A.velocity = Vector2::new(100.0, 0.0);
+    let mut phy_world = PhysicsWorld::create_physics_world(Vector2::new(0.0, 40.0));
+
+    phy_world.add_phys_component(A);
+    phy_world.add_phys_component(B);
+    phy_world.add_phys_component(floor);
+    //phy_world.add_phys_component(PhysicsComponent::new(Vector2::new(500.0, 20.0), 1.0 , 40.0, 40.0));
+
+    // let mut seed1 = 789;
+    // let mut seed2 = 456;
+    //
+    // for i in 0..40 {
+    //
+    //     seed1 = (1234 * seed1 + 4321) % 5678;
+    //     seed2 = (4545 * seed2 + 4534) % 1234;
+    //     let x = seed1 % 800;
+    //     let y = seed2 % 400;
+    //     phy_world.add_phys_component(PhysicsComponent::new(Vector2::new(x as f32, y as f32), 1.0 , 40.0, 40.0));
+    // }
 
     while engine.is_running() {
         let instant = std::time::Instant::now();
@@ -55,30 +78,15 @@ fn main() {
         let key = engine.input_handle();
 
         //UPDATE
-        if A.check_collision(&mut B) {
-            let n =  Vector2::new(-1.0, 0.0);
-            let j = resolve_collisions(&mut A, &mut B, &n);
-            let impulse = n.scale(j);
-            let mass_sum = A.mass + B.mass;
-            let ratio_a = A.mass / mass_sum;
-            let ratio_b = B.mass / mass_sum;
-
-            A.velocity = A.velocity + impulse.scale(ratio_a);
-            B.velocity = B.velocity - impulse.scale(ratio_b);
-        }
-
-        A.update(delta_time);
-        B.update(delta_time);
+        phy_world.detect_and_resolve_collisions();
+        phy_world.update_physics_world(delta_time);
 
         //RENDERING
         engine.canvas.set_draw_color(Color::RGB(0, 0, 0));
         engine.canvas.clear();
         //rendering code here
         engine.canvas.set_draw_color(Color::RGB(255, 0, 0));
-        A.draw_phy_object(&mut engine.canvas);
-
-        engine.canvas.set_draw_color(Color::RGB(0, 255, 255));
-        B.draw_phy_object(&mut engine.canvas);
+        phy_world.render_world_for_debug(&mut engine.canvas);
 
         engine.canvas.present();
 

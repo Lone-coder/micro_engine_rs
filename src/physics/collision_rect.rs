@@ -1,8 +1,17 @@
+use crate::math::Vector2;
+
 pub struct CollisionRect {
     pub x : f32,
     pub y : f32,
     pub width : f32,
     pub height : f32,
+}
+
+//struct to store info about a AABB collision
+pub struct CollisionInfo {
+    pub normal: Vector2,
+    pub penetration_depth : f32,
+    pub collided : bool,
 }
 
 impl CollisionRect {
@@ -16,7 +25,8 @@ impl CollisionRect {
         }
     }
 
-    pub fn is_colliding_with(&mut self, other : &mut CollisionRect) -> bool {
+    //Basic AABB collision test
+    pub fn is_colliding_with(&self, other : &CollisionRect) -> bool {
 
         let self_top = self.y - (self.height / 2.0);
         let self_down = self.y + (self.height / 2.0);
@@ -39,4 +49,77 @@ impl CollisionRect {
         return true;
     }
 
+}
+
+fn abs(x : f32) -> f32 {
+    if x >= 0.0 {
+        return x;
+    }
+    else {
+        return -x;
+    }
+}
+
+pub fn detect_collison(a : &CollisionRect, b : &CollisionRect) -> CollisionInfo {
+
+    let a_top = a.y - (a.height / 2.0);
+    let a_down = a.y + (a.height / 2.0);
+    let a_left = a.x - (a.width / 2.0);
+    let a_right = a.x + (a.width / 2.0);
+
+    let b_top = b.y - (b.height / 2.0);
+    let b_down = b.y + (b.height / 2.0);
+    let b_left = b.x - (b.width / 2.0);
+    let b_right = b.x + (b.width / 2.0);
+
+    let mut coll_info = CollisionInfo {
+                            normal : Vector2::new(0.0, 0.0),
+                            penetration_depth : 0.0,
+                            collided : false
+                        };
+
+    let n = Vector2::new(b.x, b.y) - Vector2::new(a.x, a.y);
+
+    let a_extent = (a_right - a_left) / 2.0;
+    let b_extent = (b_right - b_left) / 2.0;
+
+    let x_overlap = a_extent + b_extent - abs(n.x);
+
+    if x_overlap > 0.0 {
+        let a_extent = (a_down - a_top) / 2.0;
+        let b_extent = (b_down - b_top) / 2.0;
+
+        let y_overlap = a_extent + b_extent - abs(n.y);
+
+        if y_overlap > 0.0 {
+            if x_overlap > y_overlap {
+
+                if n.x > 0.0 {
+                    coll_info.normal = Vector2::new(-1.0, 0.0);
+                }
+                else {
+                    coll_info.normal = Vector2::new(1.0, 0.0);
+                }
+
+                coll_info.penetration_depth = x_overlap;
+                coll_info.collided = true;
+            }
+            else {
+
+                if n.y < 0.0 {
+                    coll_info.normal = Vector2::new(0.0, -1.0);
+                }
+                else {
+                    coll_info.normal = Vector2::new(0.0, 1.0);
+                }
+
+                coll_info.penetration_depth = y_overlap;
+                coll_info.collided = true;
+            }
+
+        }
+
+    }
+
+    coll_info
 }
