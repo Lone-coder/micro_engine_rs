@@ -43,6 +43,10 @@ impl World{
     pub fn extend(&mut self,x_blocks:Option<usize>,y_blocks:Option<usize>){
         //extends only linearly
         // and removes other parts
+        // rmove it when ready
+        unimplemented!();
+
+
         (0..y_blocks.unwrap_or(0usize)).for_each(|y|{
             (0..x_blocks.unwrap_or(0usize)).for_each(|_|{ self.layout[y].push(Vec::new())})
         })
