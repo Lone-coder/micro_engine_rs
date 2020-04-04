@@ -1,78 +1,28 @@
 use crate::core::components;
+use crate::physics::PhysicsComponent;
+use crate::math::Vector2;
+
 //#[derive(Clone)]
 pub struct Entity{
     pub x:usize,
     pub y:usize,
     pub name:String,
-    pub state:String,
-    pub physics:crate::core::components::physics::Physics,
+    pub state:usize,
+    pub physics:PhysicsComponent,
     pub animation:crate::core::components::sprite::Sprite,
-    //behaviour that entity does that depends/ affects only it
-    pub behaviour:Vec<fn(&mut Entity)>,
-
-    //behaviour that entity does that affects it and other objects
-    pub interactive_behaviour:Vec<fn(&mut Entity,Vec<&mut Entity>)>
-
 }
 
 impl Entity{
-    pub fn new(name:String)->Entity{
+
+    // Todo  enter correct required parameters
+    pub fn new(name:String,x:f32,y:f32,mass:f32,width:f32,height:f32)->Entity{
         Entity{
-            x:0,
-            y:0,
+            x:x as usize,
+            y:y as usize,
             name:name,
-            state:"".to_owned(),
-            physics:components::physics::Physics{
-                x:500,
-                y:500
-            },
+            state:0,
+            physics:PhysicsComponent::new(Vector2::new(x,y),mass,width,height),
             animation:components::sprite::Sprite::new(),
-
-            //change to hashmap
-            behaviour:Vec::new(),
-            interactive_behaviour:Vec::new()
         }
     }
-
-    pub fn load_many(&mut self,f:Vec<fn(&mut Entity)>){
-        for m in f.iter(){
-            self.behaviour.push(*m)
-        }
-    }
-
-    pub fn load(&mut self,f:fn(&mut Entity)){
-        self.behaviour.push(f)
-    }
-
-    pub fn pop_val(&mut self){
-        self.behaviour.pop();
-    }
-
-    pub fn execute(&mut self){
-        for m in 0..self.behaviour.len(){
-            self.behaviour[m](self)
-        }
-    }
-
-    pub fn exec_one(&mut self,num:usize){
-        self.behaviour[num](self)
-    }
-
-    pub fn change_state(&mut self,state:String){
-        self.animation.change_state(state.to_owned());
-        self.state=state;
-    }
-
-
-    pub fn load_interactive(&mut self,f:fn(&mut Entity,Vec<&mut Entity>)){
-        self.interactive_behaviour.push(f)
-    }
-
-
-    //This is to execute instructions based on things in the outside world
-    pub fn inter_exec(&mut self,val:&mut Entity){
-        self.interactive_behaviour[0](self,vec![val])
-    }
-
-
 }

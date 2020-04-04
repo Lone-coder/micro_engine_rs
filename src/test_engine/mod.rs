@@ -27,7 +27,6 @@ pub struct Engine<'a>{
     pub running : bool,
     delta_time : f32,
     pub texture_list:Vec<Texture<'a>>,
-    pub game:crate::game::Game,
 }
 
 impl <'a>Engine<'a>{
@@ -43,7 +42,7 @@ impl <'a>Engine<'a>{
             running:false,
             delta_time:3.0,
             texture_list:Vec::new(),
-            game:crate::game::Game::new()
+
         }
 
     }
@@ -62,9 +61,7 @@ impl <'a>Engine<'a>{
     }
 
     pub fn update_game(&mut self,index:usize){
-        for m in &self.game.entities{
-            m.borrow_mut().execute()
-        }
+
     }
 
 

@@ -1,3 +1,4 @@
+/*
 use micro_engine_rs::entity::dynamicEntity::Entity;
 
 fn main(){
@@ -102,5 +103,10 @@ pub fn follow(ent:&mut Entity,mut other:Vec<&mut Entity>){
 
     other[0].physics.x=400;
     other[0].physics.y=800;
+
+}
+
+*/
+fn main(){
 
 }

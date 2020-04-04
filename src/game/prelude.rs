@@ -19,6 +19,18 @@ pub enum SendValue{
     },
     Destroy{
         index:usize
-    }
+    },
+    Idle
 
+}
+
+impl SendValue{
+    pub fn is_not_idle(&self)->bool{
+        if let(Self::Idle)=self{
+            false
+        }
+        else{
+            true
+        }
+    }
 }
