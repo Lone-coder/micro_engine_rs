@@ -1,6 +1,9 @@
+use crate::entity::dynamicEntity;
+
 pub trait Messagable {
     fn send(&self);
 }
+
 
 pub enum SendValue{
     Number{
@@ -10,8 +13,9 @@ pub enum SendValue{
     Request{
         val:usize
     },
-    EntityLoad{
-        val:Box<SendValue>
+    CreateEntity{
+        entity:dynamicEntity::Entity,
+        func:fn(&mut dynamicEntity::Entity,SendValue)->SendValue
     },
     ChangeParams{
         index:usize,
@@ -19,6 +23,10 @@ pub enum SendValue{
     },
     Destroy{
         index:usize
+    },
+    Objects{
+                //x   y   w   h
+        val:Vec<(f32,f32,f32,f32)>
     },
     Idle
 

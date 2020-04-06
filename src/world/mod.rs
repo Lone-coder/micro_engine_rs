@@ -43,7 +43,7 @@ impl World{
     pub fn extend(&mut self,x_blocks:Option<usize>,y_blocks:Option<usize>){
         //extends only linearly
         // and removes other parts
-        // rmove it when ready
+        // remove it when ready
         unimplemented!();
 
 
