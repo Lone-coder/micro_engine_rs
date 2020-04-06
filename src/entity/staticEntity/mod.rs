@@ -21,8 +21,9 @@ impl StaticEntity{
     pub fn get_y(&self)->usize{
         self.collision_rect.y as usize
     }
-    pub fn get_components(&self)->CollisionRect{
-        self.collision_rect
+    pub fn get_components(&self){//->CollisionRect{
+        // need to resolve this 
+        //self.collision_rect
     }
     pub fn set_state(&mut self,state:usize){
         self.state=state

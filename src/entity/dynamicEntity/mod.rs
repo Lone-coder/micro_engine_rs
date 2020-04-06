@@ -1,5 +1,5 @@
 use crate::core::components;
-use crate::physics::PhysicsComponent;
+use crate::physics::physics_component::PhysicsComponent;
 use crate::math::Vector2;
 
 //#[derive(Clone)]

@@ -79,7 +79,8 @@ impl World{
             return out
         }
         self.layout[y as usize][x as usize].iter().for_each(|x|{
-            out.push(x.get_components())
+            //out.push(x.get_components())
+            // resolve this issue 
         });
         out
     }
