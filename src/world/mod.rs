@@ -10,13 +10,15 @@ use crate::physics::collision_rect;
 pub struct World{
     layout:Vec<Vec<Vec<staticEntity::StaticEntity>>>,
     block_width:usize,
-    block_height:usize
+    block_height:usize,
+    x_blocks:usize,
+    y_blocks:usize
 }
 
 
 
 impl World{
-    pub fn create_new(x_blocks:usize,y_blocks:usize)->World{
+    pub fn new(x_blocks:usize,y_blocks:usize)->World{
 
         let mut layout=Vec::new();
         (0..y_blocks).for_each(|x|{
@@ -27,7 +29,9 @@ impl World{
         World{
             layout:layout,
             block_width:0,
-            block_height:0
+            block_height:0,
+            x_blocks:x_blocks,
+            y_blocks:y_blocks
         }
         }
 
@@ -67,12 +71,15 @@ impl World{
 
     //  Gets objects adjacent to a dynamic entity
     pub fn get_adj_objs(&self,ent:&dynamicEntity::Entity)->Vec<&staticEntity::StaticEntity>{
-        let mut out:Vec<&staticEntity::StaticEntity>=Vec::new();
+        let mut ents:Vec<&staticEntity::StaticEntity>=Vec::new();
         let v=self.get_adj_indices(ent);
         v.iter().for_each(|block|{
-            self.layout[block.1 as usize ][block.0 as usize].iter().for_each(|object| out.push(object))
-        });
-        out
+            if (block.1>=0 && block.0>=0)&&
+            ((block.0 as usize)<self.x_blocks && (block.1 as usize )< self.y_blocks){
+            self.layout[block.1 as usize ][block.0 as usize].iter().for_each(|object| ents.push(object))
+        }
+    });
+        ents
     }
 }
 

@@ -2,7 +2,7 @@ use micro_engine_rs::Engine;
 use micro_engine_rs::entity::dynamicEntity;
 use micro_engine_rs::world::World;
 use std::path::Path;
-
+use micro_engine_rs::entity::camera::Camera;
 
 
 fn main(){
@@ -12,7 +12,8 @@ fn main(){
     engine.load_texture("assets/transparent-bg-tiles.png");
     let mut hero=dynamicEntity::Entity::new("hero".to_owned(),200.0,200.0,5.0,16.0,16.0);
     let mut npc=dynamicEntity::Entity::new("boy_npc".to_owned(),300.0,300.0,5.0,16.0,16.0);
+    let mut cam=Camera::new();
+    let mut world=World::new(6,6);
+    cam.get_render_objects(&world);
     //npc.animation.load_states("up",vec![(),(),()]);
-    
-
 }

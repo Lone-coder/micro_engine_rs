@@ -1,10 +1,10 @@
 use crate::physics::collision_rect::CollisionRect;
-
+use crate::core::components::sprite::Sprite;
 pub struct StaticEntity{
     pub collision_rect:CollisionRect,
-    pub state:usize,
-    pub texture_id:usize
-
+    pub state:String,
+    pub texture_id:usize,
+    pub animation:Sprite
 
 }
 impl StaticEntity{
@@ -12,8 +12,9 @@ impl StaticEntity{
     pub fn new(x:usize,y:usize,width:usize,height:usize)->StaticEntity{
         StaticEntity{
             collision_rect:CollisionRect::new(x as f32, y as f32,width  as f32,height as f32),
-            state:0,
-            texture_id:0
+            state:"Dead".to_owned(),
+            texture_id:0,
+            animation:Sprite::new()
         }
     }
 
@@ -27,7 +28,7 @@ impl StaticEntity{
         // need to resolve this
         //self.collision_rect
     }
-    pub fn set_state(&mut self,state:usize){
+    pub fn set_state(&mut self,state:String){
         self.state=state
     }
 }

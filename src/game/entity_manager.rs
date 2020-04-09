@@ -62,7 +62,7 @@ impl Manager{
             entities:VecDeque::new(),
             messages:VecDeque::new(),
             asstd_fns:VecDeque::new(),
-            world:World::create_new(n,m)
+            world:World::new(n,m)
         }
     }
 
@@ -137,7 +137,7 @@ impl Manager{
     }
 
     pub fn attach_world(&mut self,x:usize,y:usize){
-        self.world=World::create_new(x,y)
+        self.world=World::new(x,y)
     }
 
 
