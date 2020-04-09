@@ -10,6 +10,9 @@ fn main(){
     let mut engine=Engine::init_engine(800,600,"test");
     engine.load_texture("assets/hero.png");
     engine.load_texture("assets/transparent-bg-tiles.png");
+    let mut hero=dynamicEntity::Entity::new("hero".to_owned(),200.0,200.0,5.0,16.0,16.0);
+    let mut npc=dynamicEntity::Entity::new("boy_npc".to_owned(),300.0,300.0,5.0,16.0,16.0);
+    //npc.animation.load_states("up",vec![(),(),()]);
     
 
 }

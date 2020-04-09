@@ -2,8 +2,9 @@ use crate::physics::collision_rect::CollisionRect;
 
 #[derive(Debug)]
 pub struct StaticEntity{
-    collision_rect:CollisionRect,
-    state:usize,
+    pub collision_rect:CollisionRect,
+    pub state:usize,
+    pub texture_id:usize
 
 }
 
@@ -12,7 +13,8 @@ impl StaticEntity{
     pub fn new(x:usize,y:usize,width:usize,height:usize)->StaticEntity{
         StaticEntity{
             collision_rect:CollisionRect::new(x as f32, y as f32,width  as f32,height as f32),
-            state:0
+            state:0,
+            texture_id:0
         }
     }
 
