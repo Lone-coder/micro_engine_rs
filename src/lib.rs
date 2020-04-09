@@ -124,4 +124,10 @@ impl  Engine {
     }
 
 
+    pub fn render(&mut self,index:usize,src:sdl2::rect::Rect,dst:sdl2::rect::Rect)->Result<(),String>{
+        self.canvas.copy(&self.textures[index], src, dst)?;
+        Ok(())
+        }
+
+
 }
