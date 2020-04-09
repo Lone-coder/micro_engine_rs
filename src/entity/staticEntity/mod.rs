@@ -30,7 +30,7 @@ impl StaticEntity{
         // need to resolve this
         //self.collision_rect
     }
-
+    
     pub fn set_state(&mut self,state:usize){
         self.state=state
     }

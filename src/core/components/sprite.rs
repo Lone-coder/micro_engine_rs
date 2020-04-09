@@ -31,6 +31,12 @@ impl Sprite{
          sprite
     }
 
+    pub fn get_frame_static(&self)->Rect{
+        let val=self.sprite_coords[self.index];
+        Rect::new(val.0,val.1,self.width as u32,self.height as u32)
+    }
+
+
     pub fn get_coords_inc(&mut self)->(i32,i32){
 
         self.index=self.index+1;
