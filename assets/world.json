@@ -1,0 +1,18 @@
+{
+  "world" : [
+    {
+    "block_id" : 0
+    "static_entities" : [{ "x" : 45,"y" : 50,"width" : 20,"height" : 20},
+                        { "x" : 45,"y" : 50,"width" : 20,"height" : 20},
+                        { "x" : 45,"y" : 50,"width" : 20,"height" : 20},
+                        { "x" : 45,"y" : 50,"width" : 20,"height" : 20}]
+
+    },
+    {
+    "block_id" : 1
+    "static_entities" : [{ "x" : 45,"y" : 50,"width" : 20,"height" : 20},
+                        { "x" : 45,"y" : 50,"width" : 20,"height" : 20},
+                        { "x" : 45,"y" : 50,"width" : 20,"height" : 20},
+                        { "x" : 45,"y" : 50,"width" : 20,"height" : 20}]
+    }]
+}

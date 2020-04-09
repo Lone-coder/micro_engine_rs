@@ -13,7 +13,6 @@ pub struct RenderBuff{
 }
 
 
-
 pub struct Camera{
     pub x:f32,
     pub y:f32,
@@ -25,12 +24,12 @@ pub struct Camera{
 
 impl Camera{
     pub fn new()->Camera{
-        Camera{x:0.0,y:0.0,physics:Vector2::new(0.0,0.0),renderbuff:Vec::new(),width:0.0,height:0.0}
+        Camera {x:0.0,y:0.0,physics:Vector2::new(0.0,0.0),renderbuff:Vec::new(),width:0.0,height:0.0}
         }
 
     pub fn get_render_objects(&mut self,world:&World){
         let ent=Entity::new("dummy".to_owned(),self.x,self.y,0.1,0.0,0.0);
-        
+
     }
 
 

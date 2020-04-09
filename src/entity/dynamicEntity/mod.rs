@@ -3,7 +3,7 @@ use crate::physics::physics_component::PhysicsComponent;
 use crate::math::Vector2;
 
 //#[derive(Clone)]
-pub struct Entity{
+pub struct Entity {
     pub x:usize,
     pub y:usize,
     pub name:String,

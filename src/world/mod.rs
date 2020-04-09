@@ -13,8 +13,6 @@ pub struct World{
     block_height:usize
 }
 
-
-
 impl World{
     pub fn create_new(x_blocks:usize,y_blocks:usize)->World{
 

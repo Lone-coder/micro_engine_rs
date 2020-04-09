@@ -4,6 +4,7 @@ use std::fs;
 use std::path::Path;
 
 use crate::entity::staticEntity::StaticEntity;
+use crate::world::World;
 
 //static entity JSON format
 /*
@@ -32,11 +33,13 @@ pub fn load_static_entity(filename : &str) -> StaticEntity {
 }
 
 //world description
-pub fn load_world(filename : &str) {
+pub fn load_world(filename : &str) -> World {
 
     let content = fs::read_to_string(Path::new(filename))
                     .expect("Unable to load world description file");
 
     let v : Value = serde_json::from_str(&content).unwrap();
+
+    World::create_new(0,0)
 
 }
