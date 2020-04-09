@@ -1,6 +1,7 @@
 use crate::math::Vector2;
 
 //collision rect to collision detection
+#[derive(Debug)]
 pub struct CollisionRect {
     pub x : f32,
     pub y : f32,

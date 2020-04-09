@@ -4,6 +4,7 @@ pub mod physics;
 pub mod render;
 pub mod math;
 pub mod test_engine;
+pub mod asset_loader;
 
 // Testing modules
 pub mod entity;
@@ -42,7 +43,7 @@ pub struct Engine{
 
 }
 
-impl  Engine {
+impl Engine {
 
     pub fn init_engine(screen_width : u32, screen_height : u32, window_title : &str) -> Engine
     {

@@ -1,11 +1,12 @@
 use crate::physics::collision_rect::CollisionRect;
 
+#[derive(Debug)]
 pub struct StaticEntity{
     collision_rect:CollisionRect,
     state:usize,
 
-
 }
+
 impl StaticEntity{
     // for testing
     pub fn new(x:usize,y:usize,width:usize,height:usize)->StaticEntity{
@@ -22,7 +23,7 @@ impl StaticEntity{
         self.collision_rect.y as usize
     }
     pub fn get_components(&self){//->CollisionRect{
-        // need to resolve this 
+        // need to resolve this
         //self.collision_rect
     }
     pub fn set_state(&mut self,state:usize){
