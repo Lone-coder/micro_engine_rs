@@ -26,7 +26,7 @@ pub struct Engine<'a>{
     pub event_pump : sdl2::EventPump,
     pub running : bool,
     delta_time : f32,
-    pub texture_list:Vec<Texture<'a>>,
+    pub texture_list:Vec<Texture>,
 }
 
 impl <'a>Engine<'a>{

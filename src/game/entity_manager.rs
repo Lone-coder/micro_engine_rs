@@ -1,3 +1,10 @@
+//=============================================================
+//      INVALIDATED BASED ON RECENT DEVELOPMENTS
+//=============================================================
+
+
+
+
 use crate::entity::dynamicEntity::Entity;
 use super::prelude::Messagable;
 use super::prelude::SendValue;
@@ -38,7 +45,6 @@ pub struct Manager{
 
 
 impl Manager{
-
     pub fn new()->Manager{
 
         //implement method to load from the map editor
@@ -267,3 +273,5 @@ fn test(){
 fn physics_problem(enta:&mut Entity,entb:&mut Entity){
     enta.state=entb.state
 }
+
+//

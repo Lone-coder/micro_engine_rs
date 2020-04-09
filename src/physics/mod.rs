@@ -3,6 +3,10 @@ use crate::math::Vector2;
 pub mod collision_rect;
 pub mod physics_component;
 
+//  kind of like another git
+// to suggest changes
+pub mod changes;
+
 //for visual rendering
 use sdl2::video::Window;
 use sdl2::render::Canvas;
@@ -33,17 +37,26 @@ impl PhysicsWorld {
     //detects collision and resolves it
     pub fn detect_and_resolve_collisions(&mut self) {
         // looping through all physics components and checking for collision
-        for i in 0..self.phys_components.len() {
-            for j in 0..self.phys_components.len() {
+        //for i in 0..self.phys_components.len() {
+        //    for j in 0..self.phys_components.len() {
                 //avoiding collision check with itself
-                if i != j {
+
+
+                let i=0;
+                let j=1;
+
+                println!("xa {:?} xb {:?} ",self.phys_components[i].position,self.phys_components[j].position );
+                 {
                      let coll_info = self.phys_components[i].check_collision2(&self.phys_components[j]);
                      let collided = coll_info;
+                    // println!("collided {:?}",collided );
 
                     //let coll_info = self.phys_components[i].check_collision(&self.phys_components[j]);
                     //let collided = coll_info.collided;
 
                     if collided {
+
+                        println!("collided {:?}",collided );
                         //let n = coll_info.normal;
                         let n = Vector2::new(1.0, 0.0);
                         //scaling collision normal by impule value to get impulse vector
@@ -53,15 +66,17 @@ impl PhysicsWorld {
                         let mass_sum = self.phys_components[i].mass + self.phys_components[j].mass;
                         let ratio_a = self.phys_components[i].mass / mass_sum;
                         let ratio_b = self.phys_components[j].mass / mass_sum;
-
+                        println!("xa {:?} xb {:?} ",self.phys_components[i].position,self.phys_components[j].position );
                         //updating velocity of objects after collision
                         self.phys_components[i].velocity = self.phys_components[i].velocity + impulse.scale(ratio_a);
                         self.phys_components[j].velocity = self.phys_components[j].velocity - impulse.scale(ratio_b);
                     }
-                }
-            }
+            //    }
+            //}
         }
     }
+
+
 
     pub fn update_physics_world(&mut self, delta_time : f32) {
 
@@ -85,9 +100,12 @@ impl PhysicsWorld {
 //calculates impusle magnitude for a collision
 pub fn resolve_collisions(A : &PhysicsComponent, B : &PhysicsComponent, collision_normal : &Vector2) -> f32 {
 
+    println!("a rest co{:?}, b rest co {:?} ",A.restitution_coeff,B.restitution_coeff );
+    println!("collision normal= {:?}",collision_normal);
     let rv = B.velocity - A.velocity;
-
+    println!("rv={:?}", rv);
     let vel_along_normal = rv.dot(collision_normal);
+    println!("vel_normal = {:?}",vel_along_normal );
 
     if vel_along_normal > 0.0 {
         return 0.0
@@ -102,5 +120,5 @@ pub fn resolve_collisions(A : &PhysicsComponent, B : &PhysicsComponent, collisio
         e = A.restitution_coeff;
     }
 
-    (-(1.0 + e) * vel_along_normal) / (A.inverse_mass + B.inverse_mass) //impulse magnitude
+    (-(1.0 + e) * vel_along_normal)// / (A.inverse_mass + B.inverse_mass) //impulse magnitude
 }

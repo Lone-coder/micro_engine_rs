@@ -38,7 +38,7 @@ fn main() {
     B.restitution_coeff = 0.0;
     floor.restitution_coeff = 0.0;
 
-    A.velocity = Vector2::new(100.0, 0.0);
+    A.velocity = Vector2::new(50.0, 0.0);
     let mut phy_world = PhysicsWorld::create_physics_world(Vector2::new(0.0, 40.0));
 
     phy_world.add_phys_component(A);

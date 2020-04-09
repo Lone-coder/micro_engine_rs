@@ -67,12 +67,18 @@ impl World{
     }
 
 
+
+    //==========================NOTE======================================
+    // This method is probably deprecated because physics engine handles it
     // Todo
     // Create a collisions component struct to check for collisions
     // This is probably inefficient as it copies the values during each
     // execution cycle
     // probably have to change to i64
+    // gets the objects in the current block
     fn get_objs_in_blk(&self,x:i32,y:i32)->Vec<collision_rect::CollisionRect>{
+
+        unimplemented!();
         let mut out=Vec::new();
         if x<0||y<0||(x>(self.block_width*self.layout[0].len()) as i32)||
             (y>(self.block_height*self.layout.len()) as i32){
@@ -80,10 +86,12 @@ impl World{
         }
         self.layout[y as usize][x as usize].iter().for_each(|x|{
             //out.push(x.get_components())
-            // resolve this issue 
+            // resolve this issue
         });
         out
     }
+
+//=========================================
 
 
     // Redundant code !!!

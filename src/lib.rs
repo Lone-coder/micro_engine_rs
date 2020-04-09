@@ -32,17 +32,17 @@ pub use std::time::{Duration, Instant};
 pub use std::path::Path;
 
 //engine data struct (likely to change)
-pub struct Engine<'a>{
+pub struct Engine{
     pub canvas : sdl2::render::Canvas<Window>,
     pub event_pump : sdl2::EventPump,
-    pub textures : Vec<sdl2::render::Texture<'a>>,
+    pub textures : Vec<sdl2::render::Texture>,
     pub texture_creator : TextureCreator<WindowContext>,
     running : bool,
     delta_time : f32,
 
 }
 
-impl <'a> Engine <'a>{
+impl  Engine {
 
     pub fn init_engine(screen_width : u32, screen_height : u32, window_title : &str) -> Engine
     {
@@ -120,9 +120,7 @@ impl <'a> Engine <'a>{
 
     pub fn load_texture(&mut self, file_name : &str){
         let path = Path::new(file_name);
-
-        //self.textures.push(self.texture_creator.load_texture(path).unwrap());
-
+        self.textures.push(self.texture_creator.load_texture(path).unwrap());
     }
 
 
