@@ -56,7 +56,7 @@ impl World{
 
 
 
-    //  Gets the blocks adjacent to te entity
+    //  Gets the blocks adjacent to the entity
     //  [x] | [x][x] | [ ]
     //  ---------------
     //  [x] | [0][x] | [ ]

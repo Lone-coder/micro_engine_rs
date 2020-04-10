@@ -14,8 +14,6 @@ fn main(){
     let mut npc=dynamicEntity::Entity::new("boy_npc".to_owned(),300.0,300.0,5.0,16.0,16.0);
     let mut cam=Camera::new();
     let mut world=World::new(6,6);
-    world.block_height=1600;
-    world.block_width=1200;
     world.load_static_entities("assets/examples/static_entities.json");
     println!("{:?}",world );
 }
