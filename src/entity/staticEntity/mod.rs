@@ -1,20 +1,23 @@
 use crate::physics::collision_rect::CollisionRect;
+use crate::core::components::sprite::Sprite;
 
-#[derive(Debug)]
 pub struct StaticEntity{
+    pub name:String,
     pub collision_rect:CollisionRect,
     pub state:usize,
-    pub texture_id:usize
-
+    pub texture_id:usize,
+    pub animation:Sprite
 }
 
 impl StaticEntity{
     // for testing
-    pub fn new(x:usize,y:usize,width:usize,height:usize) -> StaticEntity{
+    pub fn new(name:String,x:f32,y:f32,width:f32,height:f32) -> StaticEntity{
         StaticEntity{
-            collision_rect:CollisionRect::new(x as f32, y as f32, width  as f32, height as f32),
+            name:name,
+            collision_rect:CollisionRect::new(x,y,width, height),
             state:0,
-            texture_id:0
+            texture_id:0,
+            animation:Sprite::new()
         }
     }
 
@@ -30,8 +33,15 @@ impl StaticEntity{
         // need to resolve this
         //self.collision_rect
     }
-    
+
     pub fn set_state(&mut self,state:usize){
         self.state=state
+    }
+}
+
+
+impl std::fmt::Debug for StaticEntity{
+fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::result::Result<(), std::fmt::Error> {
+    write!(f,"name:{} x: {} y: {}",self.name, self.get_x(),self.get_y())
     }
 }

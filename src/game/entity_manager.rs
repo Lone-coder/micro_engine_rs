@@ -270,8 +270,6 @@ fn test(){
 
 
 // for tests
-fn physics_problem(enta:&mut Entity,entb:&mut Entity){
-    enta.state=entb.state
-}
+
 
 //

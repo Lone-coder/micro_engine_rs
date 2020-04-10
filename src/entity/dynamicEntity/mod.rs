@@ -7,7 +7,7 @@ pub struct Entity {
     pub x:usize,
     pub y:usize,
     pub name:String,
-    pub state:usize,
+    pub state:String,
     pub physics:PhysicsComponent,
     pub animation:crate::core::components::sprite::Sprite,
 }
@@ -20,7 +20,7 @@ impl Entity{
             x:x as usize,
             y:y as usize,
             name:name,
-            state:0,
+            state:"Dead".to_owned(),
             physics:PhysicsComponent::new(Vector2::new(x,y),mass,width,height),
             animation:components::sprite::Sprite::new(),
         }

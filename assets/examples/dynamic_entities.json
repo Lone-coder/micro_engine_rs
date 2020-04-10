@@ -1,0 +1,31 @@
+{
+  "entities":[
+  {
+      "name":"Hero",
+      "x":400.0,
+      "y":600.0,
+      "width":16,
+      "height":16,
+      "mass":10.0,
+      "texture_id":1,
+      "anim":[
+        {
+        "state":"idle",
+        "frames_coords":[{"x":16,"y":48}]
+        },
+        {
+        "state":"walkup",
+        "frames_coords":[
+          {"x":0,"y":16},
+          {"x":16,"y":16},
+          {"x":32,"y":16}]
+        },
+        {
+        "state":"walkdown",
+        "frames_coords":[
+          {"x":0,"y":32},
+          {"x":16,"y":32},
+          {"x":32,"y":32}]
+        },
+      ]
+}

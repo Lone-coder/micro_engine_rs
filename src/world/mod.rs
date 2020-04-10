@@ -12,7 +12,9 @@ pub struct World{
     block_width:usize,
     block_height:usize,
     x_blocks:usize,
-    y_blocks:usize
+    y_blocks:usize,
+    world_width:usize,
+    world_height:usize
 }
 
 impl World{
@@ -26,19 +28,24 @@ impl World{
 
         World{
             layout:layout,
-            block_width:0,
-            block_height:0,
+            block_width:1600,
+            block_height:1200,
             x_blocks:x_blocks,
-            y_blocks:y_blocks
+            y_blocks:y_blocks,
+            world_width:x_blocks*1600,
+            world_height:y_blocks*1200
         }
         }
 
 
     // Loads Entities into the world
     pub fn loader(&mut self,_entity:staticEntity::StaticEntity){
-        let x=_entity.get_x()/self.layout[0].len();
-        let y=_entity.get_y()/self.layout.len();
-        self.layout[y][x].push(_entity);
+        println!("Debug : world/mod.Result:39 loader() entity.get_x()={:?}",_entity.get_x() );
+        let x=_entity.get_x()/self.block_width;
+        let y=_entity.get_y()/self.block_height;
+        if !(x>self.x_blocks||y>self.y_blocks){
+            self.layout[y][x].push(_entity);
+        }
     }
 
 
@@ -79,7 +86,54 @@ impl World{
     });
         ents
     }
+
+    // loads static entities from a file
+    pub fn load_static_entities(&mut self,file:&str){
+        use crate::asset_loader::load_world_static_entities;
+        let out=load_world_static_entities(file);
+        for m in out{
+            println!("Debug : /world/mod.rs:88 load_static_entities() m = {:?}",m );
+            self.loader(m);
+        }
+    }
+
+    // Private for now
+    //  Because In-game changing of block parameters is illegal
+    fn set_block_params(&mut self,block_width:usize,block_height:usize){
+        self.block_width=block_width;
+        self.block_height=block_height;
+        self.world_width=self.x_blocks*block_width;
+        self.world_height=self.y_blocks*block_height;
+    }
+
 }
+
+
+impl std::fmt::Debug for World{
+    fn fmt(&self, _: &mut std::fmt::Formatter<'_>) -> std::result::Result<(), std::fmt::Error> {
+    self.layout.iter().for_each(|row|{
+            println!("");
+            row.iter().for_each(|column|{
+                if column.is_empty(){
+                    print!("[ ]");
+                }else{
+                    print!("[{}]",column.len());
+                }
+            })
+        });
+
+        Ok(())
+    }
+}
+
+
+
+
+
+
+
+
+
 
 
 
