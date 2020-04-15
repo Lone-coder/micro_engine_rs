@@ -5,6 +5,7 @@ pub mod render;
 pub mod math;
 pub mod test_engine;
 pub mod asset_loader;
+pub mod system;
 
 // Testing modules
 pub mod entity;

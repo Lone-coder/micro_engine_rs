@@ -1,148 +1,87 @@
 // Data structures
-use  std::collections::VecDeque;
 use std::collections::HashMap;
 
-//Rect for rects
+use sdl2::render::Canvas;
+use sdl2::video::Window;
 use sdl2::rect::Rect;
+use sdl2::render::Texture;
 
-pub struct Sprite {
-    pub height:i32,
-    pub width:i32,
-    pub sprite_coords:VecDeque<(i32,i32)>,
-    pub index:usize,
-    pub state_map:HashMap<String,(usize,usize)>,
-    pub state:String,
-    change_time:i32,
+use crate::math::Vector2;
+
+pub struct Animation {
+    pub frame_width : i32,
+    pub frame_delay : f32,
+    pub frame_coords : Vec<(i32, i32)>,
+    pub flip_horizontal : bool
 }
 
-impl Sprite{
-    pub fn new()->Sprite{
-        let mut sprite=Sprite{
-            height:0,
-            width:0,
-            sprite_coords:VecDeque::new(),
-            index:0,
-            state_map:HashMap::new(),
-            state:"Dead".to_owned(),
-            change_time:0,
-        };
+pub struct TransformComponent {
+    position : Vector2,
+    size : Vector2,
+    angle : f32,
+}
 
-         sprite.state_map.insert(sprite.state.to_owned(),(0,0));
-         sprite
+pub struct SpriteRect {
+    pub x : i32,
+    pub y : i32,
+    pub width : i32,
+    pub height : i32,
+}
+
+pub struct SpriteComponent {
+    pub sprite_sheet : Texture,
+    pub src_rect : SpriteRect,
+    pub animations : HashMap<String, Animation>,
+    pub current_animation : String,
+    pub flip_horizontal : bool,
+    pub flip_vertical : bool
+}
+
+
+//converts sprite rect to sdl rect
+pub fn spriterect_to_sdlrect(srect : &SpriteRect) -> Rect {
+
+    Rect::new(srect.x, srect.y, srect.width as u32, srect.height as u32)
+}
+
+pub struct Sprite {
+    pub src_rect : SpriteRect,
+    pub dest_rect : SpriteRect,
+    pub animations : HashMap<String, Animation>,
+    pub current_animation : String,
+    pub flip : bool,
+    pub texture : Texture
+}
+
+impl Sprite {
+
+    pub fn update(&mut self, time : f32) {
+        self.flip = false;
+        let animation = self.animations.get(&self.current_animation).unwrap();
+        self.flip = animation.flip_horizontal;
+
+        let num_of_frames = animation.frame_coords.len() as i32;
+
+        //calculating frame index
+        let index = ((time / animation.frame_delay) as i32 % num_of_frames) as usize;
+
+        //println!("frame : {:?}", index);
+
+        //updating dest rect by taking coord from cuurent frame
+        self.src_rect.x = animation.frame_coords[index].0;
+        self.src_rect.y = animation.frame_coords[index].1;
     }
 
-    pub fn get_frame_static(&self)->Rect{
-        let val=self.sprite_coords[self.index];
-        Rect::new(val.0,val.1,self.width as u32,self.height as u32)
-    }
+    pub fn render(&mut self, canvas : &mut Canvas<Window>) {
 
+        let src_rect = spriterect_to_sdlrect(&self.src_rect);
+        let mut dest_rect = spriterect_to_sdlrect(&self.dest_rect);
 
-    pub fn get_coords_inc(&mut self)->(i32,i32){
+        //placing at the center
+        dest_rect.x -= (dest_rect.width() / 2) as i32;
+        dest_rect.y -= (dest_rect.height() / 2) as i32;
 
-        self.index=self.index+1;
-        println!("self.index is {:?}",self.index );
-        self.sprite_coords[self.index-1]
-    }
-
-
-    // load a sequence into sprite_coords
-    pub fn load_sequence(&mut self,val:Vec<(i32,i32)>){
-        val.iter().for_each(|x|{
-            self.sprite_coords.push_back(*x)
-        })
-    }
-
-    //debug
-    pub fn disp_sequence(&self){
-        self.sprite_coords.iter().for_each(|x|{
-            println!("{:?}",x );
-        })
-    }
-
-    // load a single value to sprite coords
-    pub fn load_individual(&mut self,val:(i32,i32)){
-        self.sprite_coords.push_back(val)
-    }
-
-
-
-    //SDL2 only !
-    // get rect of current value
-    // Returns sdl2::rect::Rect
-    fn get_rect(&mut self)->Rect{
-        let val=self.get_coords_inc();
-        Rect::new(val.0,val.1,self.width as u32,self.height as u32)
-
-    }
-
-
-    pub fn set_states(&mut self,val:String,index1:usize,index2:usize){
-        self.state_map.insert(val,(index1,index2)).unwrap_or_default();
-    }
-
-
-
-    // important user functions
-    // changes the state to a value
-    pub fn change_state(&mut self,val:String){
-        match self.state_map.get(&val){
-            Some(value) =>{
-                self.state=val
-            }
-            _=>()
-        }
-    }
-
-
-    // loads a sequence of animation frames based on a type of
-    // behaviour
-    pub fn load_states(&mut self, state:String,val:Vec<(i32,i32)>){
-        let start=self.sprite_coords.len();
-        self.load_sequence(val);
-        let end=self.sprite_coords.len()-1;
-
-        self.state_map.insert(state,(start,end));
-    }
-
-
-
-
-    //SDL2 only
-    // returns  the animation frames it has to go through
-    // Returns an sdl2::rect::Rect
-    // in the current state
-    // gets the current frame and increments
-    pub fn get_frame_inc(&mut self)->Rect{
-        let val=self.state_map[&self.state.to_owned()];
-
-        //debug
-        if self.index>val.1||self.index<val.0{
-            self.index=val.0;
-            self.get_rect()
-        }else{
-            self.get_rect()
-        }
-
-    }
-
-
-    //Non SDL function
-    // General , will return a tuple (a,b)
-    // containig coordinates of the next frames
-    pub fn get_next_frame(&mut self)->(i32,i32){
-        let val=self.state_map[&self.state.to_owned()];
-        if self.index>val.1||self.index<val.0{
-            self.index=val.0;
-            self.get_coords_inc()
-        }else{
-            self.get_coords_inc()
-        }
-
-    }
-
-
-    pub fn set_change_interval(&mut self, val:i32){
-        self.change_time=val
+        canvas.copy_ex(&self.texture, Some(src_rect), Some(dest_rect), 0.0, None, self.flip, false).unwrap();
     }
 
 }

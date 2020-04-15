@@ -100,7 +100,7 @@ impl <'a>Engine<'a>{
 	        }
 	    }
 
-        let key_presses:HashSet<Keycode>=self.event_pump
+        let key_presses:HashSet<Keycode> = self.event_pump
                         .keyboard_state()
                         .pressed_scancodes()
                         .filter_map(Keycode::from_scancode).collect();
