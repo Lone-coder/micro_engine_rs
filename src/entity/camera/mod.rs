@@ -1,16 +1,13 @@
 use crate::math::Vector2;
 use crate::world::World;
 use crate::entity::{staticEntity::StaticEntity,dynamicEntity::Entity};
+use crate::RenderBuff;
 
 //sdl2 only delete later
 use sdl2::rect::Rect;
 
 
-pub struct RenderBuff{
-    pub texture_id:usize,
-    pub src_rect:Rect,
-    pub dst_rect:Rect,
-}
+
 
 
 pub struct Camera{
@@ -47,5 +44,11 @@ impl Camera{
         });
         render_val
 
+    }
+
+
+
+    pub fn attach_to_world(&mut self,world:&World){
+        todo!()
     }
 }

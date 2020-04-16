@@ -4,7 +4,7 @@ use crate::core::components::sprite::Sprite;
 pub struct StaticEntity{
     pub name:String,
     pub collision_rect:CollisionRect,
-    pub state:usize,
+    pub state:String,
     pub texture_id:usize,
     pub animation:Sprite
 }
@@ -15,7 +15,7 @@ impl StaticEntity{
         StaticEntity{
             name:name,
             collision_rect:CollisionRect::new(x,y,width, height),
-            state:0,
+            state:"Dead".to_owned(),
             texture_id:0,
             animation:Sprite::new()
         }
@@ -34,8 +34,9 @@ impl StaticEntity{
         //self.collision_rect
     }
 
-    pub fn set_state(&mut self,state:usize){
-        self.state=state
+    pub fn set_state(&mut self,state:String){
+        self.state=state;
+        self.animation.change_state(self.state.clone());
     }
 }
 
