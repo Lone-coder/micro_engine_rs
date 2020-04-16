@@ -1,0 +1,30 @@
+fn test_tile_setter(world:&mut World){
+    // HardCoded for testing
+    let block_width=world.block_width;
+    let blocks_x=block_width/100;
+    let block_height=world.block_height;
+    let blocks_y=block_height/100;
+    let mut rgtg:usize=0;
+    world.tile_types.load(2,100,100,0,0);
+    world.tile_types.load(2,100,100,100,0);
+    world.tile_types.load(2,100,100,200,0);
+    world.tile_types.load(2,100,100,300,0);
+    let mut start_x:i32=0;
+    let mut start_y:i32=0;
+    (0..world.y_blocks).for_each(|row|{
+        (0..world.x_blocks).for_each(|block|{
+            world.layout[row][block].load_generic_tiles_testing(
+                rgtg%4,
+                blocks_x,
+                blocks_y,
+                (block*world.block_width) as i32,
+                (row * world.block_height) as i32,
+                100,100
+                );
+            println!("// Debug : examples/game.rs:71 {:?}",start_x);
+            rgtg+=1;
+            });
+
+    })
+
+}

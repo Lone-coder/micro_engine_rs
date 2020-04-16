@@ -10,6 +10,7 @@ pub mod asset_loader;
 pub mod entity;
 pub mod game;
 pub mod world;
+pub mod definitions;
 
 
 
@@ -31,6 +32,17 @@ extern crate serde_json;
 pub use std::collections::{HashMap,HashSet};
 pub use std::time::{Duration, Instant};
 pub use std::path::Path;
+
+
+// RenderBuff for rendering
+#[derive(Debug)]
+pub struct RenderBuff{
+    pub texture_id:usize,
+    pub src_rect:Rect,
+    pub dst_rect:Rect,
+}
+
+
 
 //engine data struct (likely to change)
 pub struct Engine{
@@ -57,7 +69,7 @@ impl Engine {
         let mut _canvas = window.into_canvas()
     	.accelerated().build().map_err(|e| e.to_string()).unwrap();
 
-        _canvas.set_draw_color(sdl2::pixels::Color::RGBA(0,0,0,255));
+        _canvas.set_draw_color(sdl2::pixels::Color::RGBA(176,174,44,255));
 
         let texture_creator = _canvas.texture_creator();
 
@@ -130,5 +142,11 @@ impl Engine {
         Ok(())
         }
 
+
+    pub fn render_from_buff(&mut self,buff:Vec<RenderBuff>){
+        buff.iter().for_each(|elem|{
+            self.canvas.copy(&self.textures[elem.texture_id],elem.src_rect,elem.dst_rect);
+        })
+    }
 
 }
