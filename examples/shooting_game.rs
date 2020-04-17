@@ -1,7 +1,7 @@
 // trying to make a shooting game
 // turned ought to be a particle simluation
 
-use micro_engine_rs;
+ use micro_engine_rs;
 use micro_engine_rs::{math, test_engine};
 use sdl2::render::Canvas;
 use sdl2::video::Window;

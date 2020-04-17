@@ -2,12 +2,13 @@ use sdl2::render::Canvas;
 use sdl2::video::Window;
 use sdl2::rect::Rect;
 
-use crate::core::components::{ SpriteRect, SpriteComponent, TransformComponent };
+use crate::core::components::sprite::{SpriteRect, SpriteComponent};
+use crate::core::components::transform::TransformComponent;
 
 //converts sprite rect to sdl rect
 pub fn spriterect_to_sdlrect(srect : &SpriteRect) -> Rect {
 
-    Rect::new(srect.x, srect.y, srect.width as u32, srect.height as u32)
+    Rect::new(srect.x, srect.y, srect.width, srect.height)
 }
 
 pub fn RenderSprite(transform : &TransformComponent, sprite : &SpriteComponent, canvas : &mut Canvas<Window>) {
@@ -20,6 +21,7 @@ pub fn RenderSprite(transform : &TransformComponent, sprite : &SpriteComponent, 
 
     let dest_rect = Rect::new(x as i32, y as i32, transform.size.x as u32 , transform.size.y as u32);
 
-    canvas.copy_ex(&sprite.texture, Some(src_rect), Some(dest_rect), transform.angle.into(), None, sprite.flip_horizontal, sprite.flip_vertical).unwrap();
+    canvas.copy_ex(&sprite.texture, Some(src_rect), Some(dest_rect),
+                        transform.angle.into(), None, sprite.flip_horizontal, sprite.flip_vertical).unwrap();
 
 }

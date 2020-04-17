@@ -2,40 +2,39 @@ use sdl2::EventPump;
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
 
-use crate::core::components::{ StateComponent, State, PlayerState};
+use std::collections::HashSet;
 
-pub fn PlayerInput(event_pump : &mut EventPump, state_component : &mut StateComponent) {
+use crate::core::components::state::{StateComponent, State, PlayerState};
 
-    match event_pump.poll_event() {
-        Some(event) => {
-            match event {
-                Event::KeyDown {keycode: Some(Keycode::Up), ..} => {
-                    state_component.current_state = State::PlayerState(PlayerState::WalkingUp);
-                },
-                Event::KeyDown {keycode: Some(Keycode::Down), ..} => {
-                    state_component.current_state = State::PlayerState(PlayerState::WalkingDown);
-                },
-                Event::KeyDown {keycode: Some(Keycode::Right), ..} => {
-                    state_component.current_state = State::PlayerState(PlayerState::WalkingRight);
-                },
-                Event::KeyDown {keycode: Some(Keycode::Left), ..} => {
-                    state_component.current_state = State::PlayerState(PlayerState::WalkingLeft);
-                },
-                Event::KeyDown {keycode: Some(Keycode::Space), ..} => {
-                    state_component.current_state = State::PlayerState(PlayerState::Shoot);
-                },
-                Event::KeyUp {keycode: Some(Keycode::Left), ..} |
-                Event::KeyUp {keycode: Some(Keycode::Right), ..} |
-                Event::KeyUp {keycode: Some(Keycode::Up), ..} |
-                Event::KeyUp {keycode: Some(Keycode::Down), ..} => {
-                    state_component.current_state = State::PlayerState(PlayerState::Idle);
-                },
+pub fn PlayerInput(new_keys : &HashSet<Keycode>, old_keys : &HashSet<Keycode>, state_component : &mut StateComponent) {
 
-                _=>(),
-            }
-        },
-        None => {
-            return;
+    let keys_not_pressed = old_keys - new_keys;
+
+    for key in new_keys.iter() {
+        match key {
+            Keycode::Up => {
+                state_component.current_state = State::PlayerState(PlayerState::WalkingUp);
+            },
+            Keycode::Down => {
+                state_component.current_state = State::PlayerState(PlayerState::WalkingDown);
+            },
+            Keycode::Right => {
+                state_component.current_state = State::PlayerState(PlayerState::WalkingRight);
+            },
+            Keycode::Left => {
+                state_component.current_state = State::PlayerState(PlayerState::WalkingLeft);
+            },
+            _=> (),
+        }
+    }
+
+    for key in keys_not_pressed.iter() {
+        match key {
+            Keycode::Up | Keycode::Down |
+            Keycode::Right | Keycode::Left => {
+                state_component.current_state = State::PlayerState(PlayerState::Idle);
+            },
+            _=> (),
         }
     }
 }

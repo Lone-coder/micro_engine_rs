@@ -104,7 +104,6 @@ impl <'a>Engine<'a>{
                         .keyboard_state()
                         .pressed_scancodes()
                         .filter_map(Keycode::from_scancode).collect();
-
         key_presses
     }
 

@@ -1,9 +1,10 @@
 use micro_engine_rs::{math::Vector2, test_engine};
-use micro_engine_rs::core::components::{ComponentManager, TransformComponent,ComponentType,
-                                        StateComponent ,Component, SpriteComponent, Animation, SpriteRect,
-                                        PlayerState, State};
-use micro_engine_rs::system::{RenderSystem, AnimationSystem, InputHandlingSystem, MovementSystem};
-use micro_engine_rs::entity::EntityManager;
+use micro_engine_rs::core::components::{ComponentManager, ComponentType, Component};
+use micro_engine_rs::core::components::sprite::{SpriteComponent, SpriteRect, Animation};
+use micro_engine_rs::core::components::transform::TransformComponent;
+use micro_engine_rs::core::components::state::{State, StateComponent, PlayerState, EnemyState};
+use micro_engine_rs::system::{RenderSystem, AnimationSystem, InputHandlingSystem, MovementSystem, AISystem};
+use micro_engine_rs::entity::{EntityManager, EntityType};
 
 use std::env;
 use std::path::Path;
@@ -39,6 +40,12 @@ fn main() {
 
     //used by animation system
     let global_instant = std::time::Instant::now();
+
+    let mut component_manager = ComponentManager::new();
+    let mut entity_manager = EntityManager::new();
+
+
+    entity_manager.create_entity("player", EntityType::Player);
 
     let idle = Animation {
         frame_width : 16,
@@ -96,41 +103,102 @@ fn main() {
         angle : 0.0
     };
 
-    let mut component_manager = ComponentManager::new();
-    let mut entity_manager = EntityManager::new();
+    let player_state = StateComponent {
+        current_state : State::PlayerState(PlayerState::Idle)
+    };
 
-    let player = entity_manager.create_entity();
+    entity_manager.attach_component("player", component_manager.create_sprite_component(sprite));
+    entity_manager.attach_component("player", component_manager.create_transform_component(transform));
+    entity_manager.attach_component("player", component_manager.create_state_component(player_state));
 
-    entity_manager.attach_component(player, component_manager.create_sprite_component(sprite));
-    entity_manager.attach_component(player, component_manager.create_transform_component(transform));
-    entity_manager.attach_component(player, component_manager.create_state_component(State::PlayerState(PlayerState::Idle)));
 
-    let enemy  = entity_manager.create_entity();
+    let enemy  = entity_manager.create_entity("enemy", EntityType::Enemy);
+
+    let enemy_transform = TransformComponent {
+        position : Vector2::new(500.0, 500.0),
+        size : Vector2::new(64.0, 64.0),
+        angle : 0.0
+    };
+
+    let mut enemy_sprite = SpriteComponent {
+        src_rect : SpriteRect{ x : 0, y : 0, width : 16, height : 16},
+        animations : HashMap::new(),
+        current_animation : "".to_string(),
+        flip_horizontal : false,
+        flip_vertical : false,
+        texture : engine.texture_creator.unwrap().load_texture(std::path::Path::new("assets/npc.png")).unwrap(),
+    };
+
+    let enemy_idle = Animation {
+        frame_width : 16,
+        frame_delay : 100.0,
+        frame_coords : vec![(16, 32)],
+        flip_horizontal : false,
+    };
+
+    let enemy_walk_left = Animation {
+        frame_width : 16,
+        frame_delay : 100.0,
+        frame_coords : vec![(0, 0), (16, 0), (32, 0)],
+        flip_horizontal : false,
+    };
+
+    let enemy_walk_right = Animation {
+        frame_width : 16,
+        frame_delay : 100.0,
+        frame_coords : vec![(0, 0), (16, 0), (32, 0)],
+        flip_horizontal : true,
+    };
+
+    let enemy_walk_up = Animation {
+        frame_width : 16,
+        frame_delay : 100.0,
+        frame_coords : vec![(0, 16), (16, 16), (32, 16)],
+        flip_horizontal : false,
+    };
+
+    let enemy_walk_down = Animation {
+        frame_width : 16,
+        frame_delay : 100.0,
+        frame_coords : vec![(0, 32), (16, 32), (32, 32)],
+        flip_horizontal : false,
+    };
+
+    enemy_sprite.animations.insert("walk_left".to_string(), enemy_walk_left);
+    enemy_sprite.animations.insert("walk_up".to_string(), enemy_walk_up);
+    enemy_sprite.animations.insert("walk_right".to_string(), enemy_walk_right);
+    enemy_sprite.animations.insert("walk_down".to_string(), enemy_walk_down);
+    enemy_sprite.animations.insert("idle".to_string(), enemy_idle);
+
+    let enemy_state = StateComponent {
+        current_state : State::EnemyState(EnemyState::Idle),
+    };
+
+    entity_manager.attach_component("enemy", component_manager.create_transform_component(enemy_transform));
+    entity_manager.attach_component("enemy", component_manager.create_sprite_component(enemy_sprite));
+    entity_manager.attach_component("enemy", component_manager.create_state_component(enemy_state));
+
+    let mut old_keyset : HashSet<Keycode> = HashSet::new();
 
     while engine.is_running() {
         let instant = std::time::Instant::now();
 
-        //INPUT
-        for entity_index in 0..entity_manager.entities.len() {
-            let state_index =  entity_manager.get_component_index(entity_index, ComponentType::StateComponent);
+        //Input
+        let new_keyset = engine.input_handle();
+        InputHandlingSystem::PlayerInput(&new_keyset, &old_keyset, &mut component_manager
+                                .states[entity_manager
+                                .get_component_index_of_entity("player", ComponentType::StateComponent).unwrap()]);
+        old_keyset = new_keyset;
 
-            match state_index  {
-                Some(s_id) => {
-                    InputHandlingSystem::PlayerInput(&mut engine.event_pump, &mut component_manager.states[s_id]);
-                }
-                _ => ()
-            }
-        }
-
-
-        let key = engine.input_handle();
-
+        //Update
+        //AI update
+        updateAI(&mut entity_manager, &mut component_manager);
 
         for entity_index in 0..entity_manager.entities.len() {
 
-            let sprite_index = entity_manager.get_component_index(entity_index, ComponentType::SpriteComponent);
-            let state_index =  entity_manager.get_component_index(entity_index, ComponentType::StateComponent);
-            let transform_index = entity_manager.get_component_index(entity_index, ComponentType::TransformComponent);
+            let sprite_index = entity_manager.get_component_index_of_entity_id(entity_index, ComponentType::SpriteComponent);
+            let state_index =  entity_manager.get_component_index_of_entity_id(entity_index, ComponentType::StateComponent);
+            let transform_index = entity_manager.get_component_index_of_entity_id(entity_index, ComponentType::TransformComponent);
 
 
             match (state_index, sprite_index)  {
@@ -156,15 +224,15 @@ fn main() {
             }
         }
 
-        //RENDERING
-        engine.canvas.set_draw_color(Color::RGB(18, 18, 18));
-        //engine.canvas.clear();
+        //Render
+        engine.canvas.set_draw_color(Color::RGB(20, 20, 20));
+        engine.canvas.clear();
         //rendering code here
 
         for index in 0..entity_manager.entities.len() {
 
-            let transform_index = entity_manager.get_component_index(index, ComponentType::TransformComponent);
-            let sprite_index = entity_manager.get_component_index(index, ComponentType::SpriteComponent);
+            let transform_index = entity_manager.get_component_index_of_entity_id(index, ComponentType::TransformComponent);
+            let sprite_index = entity_manager.get_component_index_of_entity_id(index, ComponentType::SpriteComponent);
 
             match (transform_index, sprite_index) {
                 (Some(t_id), Some(sprt_id)) => {
@@ -172,12 +240,26 @@ fn main() {
                 },
                 (_,_) => (),
             }
-
         }
-
 
         engine.canvas.present();
 
         delta_time = instant.elapsed().as_secs_f32();
     }
+}
+
+//custom behaviour
+fn updateAI(entity_manager : &mut EntityManager, component_manager : &mut ComponentManager) {
+    let target_position = &component_manager.transforms[entity_manager
+                        .get_component_index_of_entity("player",  ComponentType::TransformComponent).unwrap()]
+                        .position;
+
+    let follower_position = &component_manager.transforms[entity_manager
+                        .get_component_index_of_entity("enemy",  ComponentType::TransformComponent).unwrap()]
+                        .position;
+
+    let state = &mut component_manager.states[entity_manager
+                        .get_component_index_of_entity("enemy",  ComponentType::StateComponent).unwrap()];
+
+    AISystem::follow(target_position, follower_position, state);
 }
