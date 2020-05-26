@@ -1,5 +1,8 @@
+pub mod animation;
+
+pub use animation::Animation;
+
 use std::collections::HashMap;
-use std::cmp::{Eq, PartialEq};
 
 use sdl2::render::Texture;
 
@@ -18,25 +21,6 @@ impl SpriteRect {
             y : y,
             width : width,
             height : height,
-        }
-    }
-}
-
-#[derive(Debug)]
-pub struct Animation {
-    pub frame_width : u32,
-    pub frame_delay : f32,
-    pub frame_coords : Vec<(i32, i32)>,
-    pub flip_horizontal : bool
-}
-
-impl Animation {
-    pub fn new(frame_width : u32, frame_delay : f32, frame_coords : Vec<(i32, i32)>, flip_horizontal : bool) -> Animation {
-        Animation {
-            frame_width : frame_width,
-            frame_delay : frame_delay,
-            frame_coords : frame_coords,
-            flip_horizontal : flip_horizontal
         }
     }
 }

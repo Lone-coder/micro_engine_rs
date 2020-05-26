@@ -7,9 +7,8 @@ use std::collections::HashSet;
 use crate::core::components::state::{StateComponent, State, PlayerState};
 
 pub fn PlayerInput(new_keys : &HashSet<Keycode>, old_keys : &HashSet<Keycode>, state_component : &mut StateComponent) {
-
     let keys_not_pressed = old_keys - new_keys;
-
+    
     for key in new_keys.iter() {
         match key {
             Keycode::Up => {

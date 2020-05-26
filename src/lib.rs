@@ -41,7 +41,6 @@ pub struct Engine{
     pub texture_creator : TextureCreator<WindowContext>,
     running : bool,
     delta_time : f32,
-
 }
 
 impl Engine {

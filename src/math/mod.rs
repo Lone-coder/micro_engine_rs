@@ -32,6 +32,11 @@ impl Vector2 {
         (self.x*self.x + self.y*self.y).sqrt()
     }
 
+    pub fn normalize(&self) -> Vector2 {
+        let mag = self.modulus();
+        Vector2::new(self.x / mag, self.y / mag)
+    }
+
     pub fn find_angle_rel(&self,other:&Self)->f32{
         (self.dot(other)/(self.modulus()*other.modulus())).acos()
     }

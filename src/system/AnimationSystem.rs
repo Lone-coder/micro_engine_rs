@@ -2,7 +2,6 @@ use crate::core::components::sprite::SpriteComponent;
 use crate::core::components::state::{StateComponent, PlayerState, EnemyState, State};
 
 pub fn UpdateAnimationState(state : &mut StateComponent, sprite : &mut SpriteComponent) {
-
     match state.current_state {
         State::PlayerState(PlayerState::WalkingUp) | State::EnemyState(EnemyState::WalkingUp) => {
             sprite.current_animation = "walk_up".to_string();
@@ -21,16 +20,13 @@ pub fn UpdateAnimationState(state : &mut StateComponent, sprite : &mut SpriteCom
         },
         _ => (),
     }
-
 }
 
 pub fn UpdateAnimation(sprite : &mut SpriteComponent, time_elasped : f32) {
-
     match &sprite.animations.get(&sprite.current_animation) {
         Some(animation) => {
             let num_of_frames = animation.frame_coords.len() as i32;
             let frame_delay = animation.frame_delay;
-
             //calculating frame index
             let index = ((time_elasped / frame_delay) as i32 % num_of_frames) as usize;
 
