@@ -28,35 +28,54 @@ fn main() {
 
     //Initializing physics components
     let mut A = PhysicsComponent::new(Vector2::new(150.0, 300.0), 1.0, 40.0, 40.0);
-    let mut B = PhysicsComponent::new(Vector2::new(500.0, 300.0), 0.0 , 40.0, 40.0);
-    let mut floor = PhysicsComponent::new(Vector2::new(400.0, 500.0), 0.0, 800.0, 20.0);
+    let mut B = PhysicsComponent::new(Vector2::new(500.0, 300.0), 1.0 , 40.0, 40.0);
+
+    let mut floor = PhysicsComponent::new(Vector2::new(400.0, 600.0), 0.0, 780.0, 20.0);
+    let mut floor3 = PhysicsComponent::new(Vector2::new(400.0, 0.0), 0.0, 780.0, 20.0);
+    
+    let mut floor2 = PhysicsComponent::new(Vector2::new(800.0, 300.0), 0.0, 20.0, 600.0);
+    let mut floor1 = PhysicsComponent::new(Vector2::new(0.0, 300.0), 0.0, 20.0, 600.0);
+    
     A.affected_by_gravity = false;
     B.affected_by_gravity = false;
     floor.affected_by_gravity = false;
+    floor1.affected_by_gravity = false;
+    floor2.affected_by_gravity = false;
+    floor3.affected_by_gravity = false;
 
-    A.restitution_coeff = 0.0;
-    B.restitution_coeff = 0.0;
-    floor.restitution_coeff = 0.0;
+    A.restitution_coeff = 1.0;
+    B.restitution_coeff = 1.0;
+    floor.restitution_coeff = 1.0;
+    floor1.restitution_coeff = 1.0;
+    floor2.restitution_coeff = 1.0;
+    floor3.restitution_coeff = 1.0;
 
-    A.velocity = Vector2::new(50.0, 0.0);
-    let mut phy_world = PhysicsWorld::create_physics_world(Vector2::new(0.0, 40.0));
+    A.velocity = Vector2::new(50.0, 20.0);
+    B.velocity = Vector2::new(-40.0, 20.0);
+  
+    let mut phy_world = PhysicsWorld::create_physics_world(Vector2::new(0.0, 60.0));
 
     phy_world.add_phys_component(A);
     phy_world.add_phys_component(B);
     phy_world.add_phys_component(floor);
-    //phy_world.add_phys_component(PhysicsComponent::new(Vector2::new(500.0, 20.0), 1.0 , 40.0, 40.0));
+    phy_world.add_phys_component(floor3);
+    phy_world.add_phys_component(floor1);
+    phy_world.add_phys_component(floor2);
 
-    // let mut seed1 = 789;
-    // let mut seed2 = 456;
-    //
-    // for i in 0..40 {
-    //
-    //     seed1 = (1234 * seed1 + 4321) % 5678;
-    //     seed2 = (4545 * seed2 + 4534) % 1234;
-    //     let x = seed1 % 800;
-    //     let y = seed2 % 400;
-    //     phy_world.add_phys_component(PhysicsComponent::new(Vector2::new(x as f32, y as f32), 1.0 , 40.0, 40.0));
-    // }
+    let mut seed1 = 789;
+    let mut seed2 = 456;
+
+    for i in 0..40 {
+        seed1 = (1234 * seed1 + 4321) % 5678;
+        seed2 = (4545 * seed2 + 4534) % 1234;
+        let x = seed1 % 800;
+        let y = seed2 % 400;
+        let mut p = PhysicsComponent::new(Vector2::new(x as f32, y as f32), 1.0 , 40.0, 40.0);
+        p.velocity = Vector2::new((x / 2)as f32, (y / 2) as f32);
+        p.affected_by_gravity = false;
+        p.restitution_coeff = 1.0;
+        phy_world.add_phys_component(p);
+    }
 
     while engine.is_running() {
         let instant = std::time::Instant::now();

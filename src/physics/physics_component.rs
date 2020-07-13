@@ -43,11 +43,7 @@ impl PhysicsComponent {
 
     //routine used by physics world to check collision
     pub fn check_collision(&self, other : &Self) -> CollisionInfo {
-        detect_collison(&self.collision_rect, &other.collision_rect)
-    }
-
-    pub fn check_collision2(&self, other : &Self) -> bool {
-        self.collision_rect.is_colliding_with(&other.collision_rect)
+        return detect_collison(&self.collision_rect, &other.collision_rect);
     }
 
     pub fn update(&mut self, dt : f32) {
@@ -69,6 +65,6 @@ impl PhysicsComponent {
         let width = self.collision_rect.width as u32;
         let height = self.collision_rect.height as u32;
 
-        canvas.draw_rect(Rect::new(x, y, width, height)).unwrap();
+        canvas.fill_rect(Rect::new(x, y, width, height)).unwrap();
     }
 }

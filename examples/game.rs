@@ -5,7 +5,7 @@
 // use micro_engine_rs::entity::camera::Camera;
 //
 //
-// fn main(){
+fn main(){
 //
 //     let mut engine=Engine::init_engine(800,600,"test");
 //     engine.load_texture("assets/hero.png");
@@ -16,4 +16,4 @@
 //     let mut world=World::new(6,6);
 //     world.load_static_entities("assets/examples/static_entities.json");
 //     println!("{:?}",world );
-// }
+ }

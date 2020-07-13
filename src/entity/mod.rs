@@ -69,7 +69,6 @@ impl EntityManager {
                 return None;
             }
         }
-
     }
 
     //getting component index with entity id(or index)

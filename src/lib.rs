@@ -6,13 +6,12 @@ pub mod math;
 pub mod test_engine;
 pub mod asset_loader;
 pub mod system;
+pub mod micro_ui;
 
 // Testing modules
 pub mod entity;
 pub mod game;
 pub mod world;
-
-
 
 // SDL2 crate
 extern crate sdl2;
@@ -84,8 +83,6 @@ impl Engine {
         self.delta_time
     }
 
-
-
     pub fn update(&mut self, instant : std::time::Instant) {
 
         //uncomment below statement to cap FPS at 60
@@ -93,8 +90,6 @@ impl Engine {
 
 		self.delta_time = instant.elapsed().as_secs_f32();
     }
-
-
 
 
 
@@ -124,11 +119,10 @@ impl Engine {
         self.textures.push(self.texture_creator.load_texture(path).unwrap());
     }
 
-
-    pub fn render(&mut self,index:usize,src:sdl2::rect::Rect,dst:sdl2::rect::Rect)->Result<(),String>{
+    pub fn render(&mut self,index:usize,src:sdl2::rect::Rect,dst:sdl2::rect::Rect) -> Result<(),String> {
         self.canvas.copy(&self.textures[index], src, dst)?;
         Ok(())
-        }
+    }
 
 
 }

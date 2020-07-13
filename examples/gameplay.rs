@@ -1,4 +1,4 @@
-//micro engine
+//micro engine modules
 use micro_engine_rs::{math::Vector2, test_engine};
 use micro_engine_rs::core::components::{ComponentManager, ComponentType, Component};
 use micro_engine_rs::core::components::sprite::{SpriteComponent, SpriteRect, Animation};
@@ -7,12 +7,13 @@ use micro_engine_rs::core::components::state::{State, StateComponent, PlayerStat
 use micro_engine_rs::system::{RenderSystem, AnimationSystem, InputHandlingSystem, MovementSystem, AISystem};
 use micro_engine_rs::entity::{EntityManager, EntityType};
 
-//standard
+
+//standard imports
 use std::env;
 use std::path::Path;
 use std::collections::{HashMap,HashSet};
 
-//sdl
+//sdl modules
 use sdl2::image::{LoadTexture, InitFlag};
 use sdl2::rect::Rect;
 use sdl2::event::Event;
@@ -170,14 +171,14 @@ fn main() {
     while engine.is_running() {
         let instant = std::time::Instant::now();
 
-        //Input
+        //INPUT
         let new_keyset = engine.input_handle();
         InputHandlingSystem::PlayerInput(&new_keyset, &old_keyset, &mut component_manager
                                 .states[entity_manager
                                 .get_component_index_of_entity("player", ComponentType::StateComponent).unwrap()]);
         old_keyset = new_keyset;
 
-        //Update
+        //GAME UPDATE
         //AI update
         update_ai(&mut entity_manager, &mut component_manager, delta_time);
 
@@ -208,7 +209,7 @@ fn main() {
             }
         }
 
-        //Render
+        //RENDER
         engine.canvas.set_draw_color(Color::RGB(20, 20, 20));
         engine.canvas.clear();
 
@@ -224,17 +225,19 @@ fn main() {
                 (_,_) => (),
             }
         }
-
         engine.canvas.present();
+        
         delta_time = instant.elapsed().as_secs_f32();
         //println!("{:?}", delta_time);
     }
 }
 
-//custom behaviour
+//custom update system
 fn update_ai(entity_manager : &mut EntityManager, component_manager : &mut ComponentManager, dt : f32) {
+    
     let target_position = component_manager.transforms[entity_manager
                         .get_component_index_of_entity("player",  ComponentType::TransformComponent).unwrap()].position;
+    
     let follower_position = &mut component_manager.transforms[entity_manager
                         .get_component_index_of_entity("enemy",  ComponentType::TransformComponent).unwrap()];
 
